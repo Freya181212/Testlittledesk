@@ -1,0 +1,13 @@
+{
+  "name": "workbuddy-freya",
+  "version": "1.0.0",
+  "description": "纯本地测试工作台（测试计划 / 测试用例 / 缺陷 Bug / 测试报告），无登录、不上云、只读本地 Excel。",
+  "private": true,
+  "scripts": {
+    "start": "node server.js",
+    "sample": "node gen-sample.js"
+  },
+  "dependencies": {
+    "xlsx": "0.18.5"
+  }
+}
