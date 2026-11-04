@@ -59,6 +59,11 @@
   .t-sub{font-size:12px;color:var(--muted)}
   .t-btn{flex-shrink:0}
   .empty{color:var(--muted);font-size:14px;padding:10px 2px}
+  .today-cols{display:flex;gap:16px;align-items:flex-start}
+  .today-col{flex:1 1 0;min-width:0}
+  .today-col+.today-col{border-left:1.5px dashed var(--border);padding-left:16px}
+  .t-col-head{font-size:13px;font-weight:800;color:var(--accent);margin-bottom:10px}
+  @media(max-width:820px){.today-cols{flex-direction:column}.today-col+.today-col{border-left:none;padding-left:0;border-top:1.5px dashed var(--border);padding-top:12px}}
   .tabs{display:flex;gap:10px;margin-top:18px;flex-wrap:wrap}
   .tab{background:#fff;border:1.5px solid var(--border);color:var(--muted);padding:11px 22px;font-size:15px;font-weight:700;cursor:pointer;border-radius:999px;min-height:46px;box-shadow:0 3px 10px rgba(255,126,179,.08)}
   .tab.active{background:var(--accent);border-color:var(--accent);color:#fff;box-shadow:0 6px 16px rgba(255,126,179,.3)}
@@ -71,6 +76,21 @@
   .stat{background:var(--panel2);border:1.5px solid var(--border);border-radius:16px;padding:14px 16px;text-align:center}
   .stat .n{font-size:26px;font-weight:800;color:var(--accent)}
   .stat .l{font-size:12px;color:var(--muted);margin-top:2px}
+  .stat.stat-total,.stat.stat-rate{background:var(--panel2);border-color:var(--border)}
+  .stat[data-result]{cursor:pointer;transition:transform .1s,box-shadow .1s}
+  .stat[data-result]:hover{transform:translateY(-2px);box-shadow:var(--shadow)}
+  .stat.stat-pass{background:#eafaf4;border-color:#46cfa0}
+  .stat.stat-pass .n{color:#46cfa0}
+  .stat.stat-fail{background:#fff0f3;border-color:#ff6b81}
+  .stat.stat-fail .n{color:#ff6b81}
+  .stat.stat-navalidate{background:#fff8ee;border-color:#ffb454}
+  .stat.stat-navalidate .n{color:#e08a00}
+  .stat.stat-noexec{background:#f3f4f6;border-color:#d1d5db}
+  .stat.stat-noexec .n{color:#6b7280}
+  .stat.stat-noverify{background:#eef6ff;border-color:#9ccdf0}
+  .stat.stat-noverify .n{color:#4a90d9}
+  .stat.stat-partial{background:#fef9c3;border-color:#facc15}
+  .stat.stat-partial .n{color:#ca8a04}
   .form{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:12px;margin-bottom:16px;background:var(--panel3);border:1.5px solid var(--border);border-radius:16px;padding:14px}
   .form .full{grid-column:1/-1}
   label{font-size:12px;color:var(--muted);font-weight:600;display:block;margin-bottom:5px}
@@ -80,32 +100,79 @@
   }
   textarea{resize:vertical;min-height:64px}
   input:focus,select:focus,textarea:focus{outline:none;border-color:var(--accent);box-shadow:0 0 0 3px rgba(255,126,179,.18)}
+  .date-field{position:relative;min-width:0}
+  .date-field input[type=date]{width:100%}
+  .date-field .date-ph{position:absolute;left:12px;top:50%;transform:translateY(-50%);color:var(--muted);font-size:15px;pointer-events:none}
+  .date-field input.no-val::-webkit-datetime-edit,
+  .date-field input.no-val::-webkit-datetime-edit-fields-wrapper,
+  .date-field input.no-val::-webkit-datetime-edit-text,
+  .date-field input.no-val::-webkit-datetime-edit-year-field,
+  .date-field input.no-val::-webkit-datetime-edit-month-field,
+  .date-field input.no-val::-webkit-datetime-edit-day-field{color:transparent;opacity:0}
   .form-actions{grid-column:1/-1;display:flex;gap:10px;flex-wrap:wrap}
+  .form.form6{grid-template-columns:repeat(7,1fr)}
+  .form.form6 .form-actions{grid-column:auto;align-self:end;justify-self:end}
+  @media(max-width:1100px){.form.form6{grid-template-columns:repeat(3,1fr)}.form.form6 .form-actions{grid-column:1/-1;justify-self:start}}
+  @media(max-width:640px){.form.form6{grid-template-columns:1fr}}
   .grid2{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:12px}
+  .grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+  @media(max-width:900px){.grid3{grid-template-columns:repeat(2,1fr)}}
+  @media(max-width:640px){.grid3{grid-template-columns:1fr}}
+  /* 测试计划：按 PM 分两列 */
+  .pm-cols{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+  .pm-col{background:var(--panel2);border:1.5px solid var(--border);border-radius:16px;padding:14px;min-width:0;max-width:100%;overflow:hidden}
+  .pm-col-head{display:flex;align-items:center;gap:8px;font-size:15px;font-weight:800;color:var(--accent);padding-bottom:10px;border-bottom:2px solid var(--accent);margin-bottom:12px}
+  .pm-col-count{font-size:12px;font-weight:600;color:var(--muted);background:#fff0f7;border-radius:20px;padding:2px 10px}
+  .pm-col-body{display:flex;flex-direction:column;gap:12px}
+  @media(max-width:860px){.pm-cols{grid-template-columns:1fr}}
   .ver-sec{background:#fff;border:2px solid var(--border);border-radius:var(--radius);padding:16px 18px;margin-top:16px;box-shadow:var(--shadow)}
   .iter-bar{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:4px}
+  .iter-bar .tab{display:inline-flex;align-items:center;gap:6px}
+  .iter-bar .edit-ico{display:inline-flex;align-items:center;justify-content:center;padding:4px 10px;margin:0 -4px;border-radius:50%;background:transparent;flex-shrink:0;cursor:pointer;transition:background .1s,transform .1s}
+  .iter-bar .edit-ico:hover{background:var(--panel3);transform:scale(1.1)}
+  .iter-bar .tab.active .edit-ico:hover{background:rgba(255,255,255,.85)}
+  .iter-bar .edit-ico svg{width:13px;height:13px;fill:currentColor}
+  .cur-dot{display:inline-block;width:9px;height:9px;border-radius:50%;background:#46cfa0;margin-right:7px;box-shadow:0 0 0 3px rgba(70,207,160,.25);flex-shrink:0;vertical-align:middle}
   .mini{width:auto;min-width:104px;padding:5px 10px;font-size:12px;font-weight:700;border-radius:999px;background:#fff;display:inline-block}
+  .file-chips{display:flex;flex-wrap:wrap;gap:6px;align-items:center;min-height:36px;padding:5px 10px;background:#fff;border:1px solid var(--border);border-radius:10px}
+  .fc-empty{font-size:12px;color:var(--muted)}
+  .fc-count{flex:none;max-width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-size:12px;font-weight:700;color:var(--accent);background:#fff0f7;border:1px solid #ffd9ea;border-radius:999px;padding:3px 10px}
+  .fc-chip{max-width:240px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-size:12px;color:#8a5a75;background:#fffafd;border:1px solid #ffe4f1;border-radius:999px;padding:3px 10px}
   .mini.w0{border-color:var(--blue);color:var(--blue)}
   .mini.w1{border-color:var(--amber);color:#e08a00}
   .mini.w2{border-color:var(--green);color:var(--green)}
   .mini.t0{border-color:var(--blue);color:var(--blue)}
   .mini.t1{border-color:var(--amber);color:#e08a00}
   .mini.t2{border-color:var(--green);color:var(--green)}
-  .mini.t3,.mini.t4{border-color:var(--red);color:var(--red)}
-  .row{display:flex;align-items:center;gap:12px;background:var(--panel2);border:1.5px solid var(--border);border-radius:16px;padding:12px 14px}
-  .row .main{flex:1;min-width:0}
-  .row .ttl{font-size:15px;font-weight:700}
-  .row .meta{font-size:12px;color:var(--muted);margin-top:4px;display:flex;gap:8px;flex-wrap:nowrap;align-items:center}
-  .row .meta>span{flex-shrink:0;white-space:nowrap}
-  .row .meta .mini{min-width:90px}
+  .mini.t3{border-color:var(--accent3);color:var(--accent3)}
+  .mini.wn,.mini.tn{border-color:#b6bcc4;color:#8a929c}
+  .mini.t4{border-color:var(--red);color:var(--red)}
+  .zt-preview{max-height:46vh;overflow:auto;margin-top:6px;border:1.5px solid var(--border);border-radius:14px;padding:8px 12px;background:#fffafd}
+  .zt-fields{display:flex;flex-direction:column;gap:8px}
+  .zt-fields .f{display:flex;gap:10px;font-size:13px;align-items:flex-start}
+  .zt-fields .f b{flex:none;width:76px;color:var(--muted);font-weight:700;text-align:right}
+  .zt-fields .f span{flex:1;min-width:0;word-break:break-word}
+  .zt-fields pre{margin:0;white-space:pre-wrap;word-break:break-word;font-family:inherit;font-size:13px;max-height:160px;overflow:auto}
+  .row{display:flex;align-items:stretch;gap:14px;background:var(--panel2);border:1.5px solid var(--border);border-radius:16px;padding:12px 16px}
+  .row .main{flex:1;min-width:0;display:flex;flex-direction:column;gap:9px;justify-content:center}
+  .row.clickable{cursor:pointer;transition:transform .1s,border-color .1s}
+  .row.clickable:hover{border-color:var(--accent);box-shadow:var(--shadow)}
+  .row .ttl{font-size:15px;font-weight:700;line-height:1.35;overflow:hidden;display:-webkit-box;line-clamp:2;-webkit-line-clamp:2;-webkit-box-orient:vertical}
+  .row .meta{font-size:12px;color:var(--muted);display:grid;grid-template-columns:repeat(3,1fr);gap:10px;align-items:center}
+  .row .meta>span{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .row .meta-row{display:flex;gap:16px}
+  .row .mini-field{flex:1;min-width:0;display:flex;align-items:center;gap:12px}
+  .row .mini-field .mini-lbl{font-size:12px;color:var(--muted);font-weight:600;flex-shrink:0;white-space:nowrap}
+  .row .mini-field .mini{flex:1;min-width:0}
+  .row .icon-btn{align-self:start}
   .chip{font-size:11px;font-weight:700;padding:3px 10px;border-radius:999px;border:1.5px solid var(--border);background:#fff}
   .chip.P0{background:#fff0f3;border-color:var(--red);color:var(--red)}
   .chip.P1{background:#fff8ee;border-color:var(--amber);color:#e08a00}
   .chip.P2{background:#eef6ff;border-color:var(--blue);color:var(--blue)}
-  .chip.s-通过,.chip.st-已关闭{background:#eafaf4;border-color:var(--green);color:var(--green)}
-  .chip.s-失败,.chip.st-新建{background:#fff0f3;border-color:var(--red);color:var(--red)}
-  .chip.s-阻塞,.chip.st-修复中{background:#fff8ee;border-color:var(--amber);color:#e08a00}
-  .chip.s-未执行,.chip.st-已验证{background:#eef6ff;border-color:var(--blue);color:var(--blue)}
+  .chip.s-通过,.chip.st-已解决{background:#eafaf4;border-color:var(--green);color:var(--green)}
+  .chip.s-失败{background:#fff0f3;border-color:var(--red);color:var(--red)}
+  .chip.s-阻塞{background:#fff8ee;border-color:var(--amber);color:#e08a00}
+  .chip.s-未执行{background:#eef6ff;border-color:var(--blue);color:var(--blue)}
   .chip.sev-致命{background:#fff0f3;border-color:var(--red);color:var(--red)}
   .chip.sev-严重{background:#ffeef0;border-color:#ff9aa8;color:#ff6b81}
   .chip.sev-一般{background:#fff8ee;border-color:var(--amber);color:#e08a00}
@@ -127,16 +194,19 @@
   .readonly-note{font-size:12px;color:var(--muted);align-self:center;display:inline-flex;align-items:center;gap:6px}
   .readonly-note svg{width:14px;height:14px;fill:var(--green)}
   /* 需求卡片 */
-  .req-card{background:var(--panel2);border:1.5px solid var(--border);border-radius:16px;padding:14px;cursor:pointer;transition:transform .1s,box-shadow .1s}
+  .req-card{background:var(--panel2);border:1.5px solid var(--border);border-radius:16px;padding:14px;cursor:pointer;transition:transform .1s,box-shadow .1s;min-width:0;max-width:100%;overflow:hidden}
   .req-card:hover{transform:translateY(-2px);border-color:var(--accent);box-shadow:var(--shadow)}
-  .rc-top{display:flex;justify-content:space-between;align-items:center;gap:8px}
-  .rc-name{font-size:15px;font-weight:700}
+  .rc-top{display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:nowrap}
+  .rc-right{display:flex;align-items:center;gap:6px;flex-shrink:0}
+  .req-card .icon-btn.del{width:28px;height:28px;border-radius:8px}
+  .req-card .icon-btn.del svg{width:14px;height:14px}
+  .rc-name{font-size:15px;font-weight:700;flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
   .rc-pct{font-size:22px;font-weight:800;color:var(--accent)}
   .rc-meta{display:flex;gap:12px;margin-top:8px;font-size:12px;color:var(--muted);align-items:center;flex-wrap:wrap}
   .rc-bar{height:9px;background:#ffd9ea;border-radius:999px;margin-top:10px;overflow:hidden}
   .rc-bar i{display:block;height:100%;background:var(--green);border-radius:999px}
   .rc-bar i.hasfail{background:var(--red)}
-  .tag-status{font-size:11px;font-weight:700;padding:3px 10px;border-radius:999px;border:1.5px solid}
+  .tag-status{font-size:11px;font-weight:700;padding:3px 10px;border-radius:999px;border:1.5px solid;flex-shrink:0;white-space:nowrap}
   .tag-status.s-fail{background:#fff0f3;border-color:var(--red);color:var(--red)}
   .tag-status.s-done{background:#eafaf4;border-color:var(--green);color:var(--green)}
   .tag-status.s-doing{background:#fff8ee;border-color:var(--amber);color:#e08a00}
@@ -144,12 +214,12 @@
   .rb{font-size:11px;font-weight:700;padding:2px 9px;border-radius:999px;border:1.5px solid;white-space:nowrap;display:inline-block}
   .rb-pass{background:#eafaf4;border-color:var(--green);color:var(--green)}
   .rb-fail{background:#fff0f3;border-color:var(--red);color:var(--red)}
-  .rb-noexec{background:#eef6ff;border-color:var(--blue);color:var(--blue)}
-  .rb-pending{background:#fff8ee;border-color:var(--amber);color:#e08a00}
-  .rb-navalidate{background:#f3f0f5;border-color:#b9a9c9;color:#8a7a9c}
-  .rb-noverify{background:#f3f0f5;border-color:#b9a9c9;color:#8a7a9c}
-  .rb-partial{background:#fff3e6;border-color:var(--amber);color:#e08a00}
-  .rb-later{background:#f0ecfa;border-color:var(--accent3);color:var(--accent3)}
+  .rb-navalidate{background:#fff8ee;border-color:var(--amber);color:#e08a00}
+  .rb-noexec{background:#f3f4f6;border-color:#d1d5db;color:#6b7280}
+  .rb-noverify{background:#eef6ff;border-color:#9ccdf0;color:#4a90d9}
+  .rb-pending{background:#f3eefb;border-color:var(--accent3);color:var(--accent3)}
+  .rb-partial{background:#fef9c3;border-color:#facc15;color:#ca8a04}
+  .rb-later{background:#fffbe6;border-color:#ffd86b;color:#c79a00}
   /* 弹窗（明细） */
   .mask{position:fixed;inset:0;background:rgba(91,70,84,.45);display:none;align-items:center;justify-content:center;z-index:50;padding:20px}
   .mask.show{display:flex}
@@ -157,18 +227,37 @@
   .modal h3{margin-bottom:6px;color:var(--accent)}
   .modal p{font-size:14px;color:var(--muted);margin-bottom:16px}
   .modal .acts{display:flex;gap:10px;justify-content:flex-end}
-  .modal.lg{max-width:94vw;width:1040px}
+  .modal.lg{max-width:96vw;width:1400px}
   .modal .rc-sub{font-size:13px;color:var(--muted);margin-bottom:12px;display:flex;gap:14px;flex-wrap:wrap}
+  /* 编辑弹窗（版本 / 需求） */
+  .modal.md{max-width:600px}
+  .modal .modal-head{display:flex;align-items:center;gap:8px;margin:-2px 0 14px;padding-bottom:12px;border-bottom:1.5px dashed var(--border)}
+  .modal .modal-head h3{margin:0;font-size:16px}
+  .modal .modal-head svg{width:18px;height:18px;fill:var(--accent)}
+  .edit-form{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px 16px;margin-bottom:18px;background:var(--panel2);border:1.5px solid var(--border);border-radius:16px;padding:16px}
+  .edit-form .full{grid-column:1/-1}
+  .edit-form .col{display:flex;flex-direction:column;gap:14px;min-width:0}
+  .edit-form .field{min-width:0}
+  .edit-form label{font-size:12px;margin-bottom:6px}
+  .edit-form input,.edit-form select{padding:9px 12px;font-size:14px;border-radius:11px;min-height:40px}
+  .req-case{background:var(--panel3);border:1.5px dashed var(--border);border-radius:14px;padding:14px}
+  .req-case>label{font-weight:600}
+  .rcu-row{display:flex;align-items:center;gap:10px;margin-top:8px;flex-wrap:wrap}
+  .rcu-name{font-size:13px;padding:6px 12px;border-radius:10px;background:var(--panel);color:var(--muted);border:1px solid var(--border)}
+  .rcu-name.on{color:var(--accent);background:#fff;border-color:var(--accent)}
+  .rcu-btn{display:inline-flex;align-items:center;cursor:pointer;min-height:34px;font-size:13px}
+  .rcu-tip{font-size:12px;color:var(--muted);margin-top:8px;line-height:1.5}
+  .modal .acts .btn{min-width:92px;justify-content:center}
   .table-scroll{max-height:68vh;overflow:auto;border:1.5px solid var(--border);border-radius:12px}
   table.cases{border-collapse:collapse;width:100%;font-size:13px}
   table.cases th,table.cases td{border-bottom:1px solid var(--border);padding:9px 10px;text-align:left;vertical-align:top;line-height:1.5}
+  table.cases td{white-space:pre-wrap;word-break:break-word}
   table.cases th{background:var(--panel3);position:sticky;top:0;color:var(--accent);font-size:12px;z-index:1}
   table.cases td.num,table.cases th.num{width:96px}
   table.cases td.center,table.cases th.center{text-align:center;width:96px}
   .hidden-input{display:none}
-  /* 测试验收新状态（Bug 模块） */
-  .chip.st-未验证{background:#eef6ff;border-color:var(--blue);color:var(--blue)}
-  .chip.st-拒绝{background:#f3f0f5;border-color:#b9a9c9;color:#8a7a9c}
+  /* 测试验收状态（Bug 模块） */
+  .chip.st-未验证{background:#fff8ee;border-color:var(--amber);color:#e08a00}
   /* Bug 统计卡片：白色圆角 */
   .stats.white .stat{background:#fff;border-color:#ffe1ef}
   .stats.white .stat .n{color:var(--accent)}
@@ -190,12 +279,24 @@
   .bug-form .bf-actions .icon-add:hover{transform:translateY(-2px);box-shadow:0 6px 16px rgba(255,126,179,.45)}
   .bug-form .bf-actions .icon-add svg{width:24px;height:24px;fill:currentColor}
   /* Bug 卡片（流式列表，白色小卡片） */
-  .bug-card{background:#fff;border:1.5px solid var(--border);border-radius:16px;padding:14px 16px;position:relative;cursor:pointer;transition:transform .1s,box-shadow .1s}
-  .bug-card:hover{transform:translateY(-2px);border-color:var(--accent);box-shadow:var(--shadow)}
-  .bug-card .bc-title{font-size:15px;font-weight:700;padding-right:46px;word-break:break-word}
-  .bug-card .bc-tags{display:flex;gap:6px;margin-top:10px;flex-wrap:wrap}
-  .bug-card .bc-meta{display:flex;gap:14px;margin-top:10px;font-size:12px;color:var(--muted);flex-wrap:wrap}
-  .bug-card .icon-btn{position:absolute;top:10px;right:10px}
+  /* Bug 表格列表 */
+  .bug-table{width:100%;border-collapse:collapse;font-size:13px}
+  .bug-table th{text-align:left;padding:10px 8px;color:var(--accent);font-weight:700;border-bottom:2px solid var(--accent);white-space:nowrap}
+  .bug-table td{padding:10px 8px;border-bottom:1px solid var(--border);vertical-align:middle;cursor:pointer;transition:background .1s}
+  .bug-table tr:hover td{background:#fff7fb}
+  .bug-table .bt-desc{max-width:0;min-width:0;width:50%;font-weight:600;word-break:break-word;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .bug-table .bt-sev,.bt-sta,.bt-own{white-space:nowrap}
+  .bug-table .bt-actions{display:flex;gap:4px;justify-content:center;flex-shrink:0}
+  .bug-table .icon-btn{width:28px;height:28px;background:transparent;border:none;padding:4px}
+  .bug-table .icon-btn svg{width:16px;height:16px}
+  /* Bug 表格内的需求分组行（可折叠） */
+  .bug-table tr.bt-group td{background:#fff5fa;border-bottom:1px solid var(--border);cursor:pointer;padding:8px;user-select:none}
+  .bug-table tr.bt-group:hover td{background:#ffeaf4}
+  .bug-table tr.bt-group .grp-inner{display:flex;align-items:center;gap:8px}
+  .bug-table tr.bt-group .chev{width:16px;height:16px;fill:var(--accent);flex-shrink:0;transition:transform .15s}
+  .bug-table tr.bt-group .chev.rot{transform:rotate(-90deg)}
+  .bug-table tr.bt-group .req-name{font-weight:700;color:var(--accent)}
+  .bug-table tr.bt-group .req-count{color:var(--muted);font-size:12px;margin-left:auto}
   /* Bug 详情弹窗 */
   .bug-detail{display:grid;grid-template-columns:auto 1fr;gap:12px 16px;margin:6px 0 0;font-size:14px}
   .bug-detail dt{color:var(--muted);font-weight:600;margin:0}
@@ -218,6 +319,9 @@
   .fold-body{padding:0 16px 16px;font-size:13px}
   .fold-card.collapsed .fold-body{display:none}
   .kv-list{display:grid;grid-template-columns:repeat(2,1fr);gap:10px 12px}
+  .iter-note{margin-top:12px;background:#fff7fb;border:1.5px solid var(--border);border-left:3px solid var(--accent);border-radius:10px;padding:10px 14px;font-size:13px;line-height:1.6;white-space:pre-wrap}
+  .iter-note b{display:block;color:var(--accent);margin-bottom:4px;font-size:12px}
+  .note-tip{font-size:12px;color:var(--muted);margin-top:6px}
   .kv{display:flex;justify-content:space-between;background:var(--panel3);border:1px solid var(--border);border-radius:10px;padding:8px 10px}
   .kv .k{color:var(--muted)}
   .kv .v{font-weight:700;color:var(--text)}
@@ -225,13 +329,31 @@
   .bug-mini .bm{background:var(--panel3);border:1px solid var(--border);border-radius:10px;padding:8px 12px;display:flex;align-items:center;gap:8px}
   .bm .n{font-weight:800;font-size:16px;color:var(--accent)}
   .bm .t{color:var(--muted)}
-  .donut-wrap{display:flex;align-items:center;justify-content:center;gap:18px;flex-wrap:wrap}
-  .donut{position:relative;width:120px;height:120px}
-  .donut svg{transform:rotate(-90deg)}
+  .donut{position:relative;width:132px;height:132px}
+  .donut svg{width:100%;height:100%;transform:rotate(-90deg)}
   .donut-center{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:15px;font-weight:800;color:var(--text)}
   .legend{display:flex;flex-direction:column;gap:8px}
-  .legend .li{display:flex;align-items:center;gap:8px;font-size:13px;color:var(--text)}
+  .legend .li{display:grid;grid-template-columns:10px 1fr auto auto;align-items:center;gap:8px;font-size:13px;color:var(--text);cursor:pointer;padding:4px 6px;border-radius:8px}
+  .legend button.li{width:100%;border:0;background:transparent;text-align:left;font:inherit}
+  .legend .li:hover{background:rgba(255,107,129,.08)}
   .legend .dot{width:10px;height:10px;border-radius:50%}
+  .legend .li-n{font-weight:700;color:var(--text);text-decoration:underline dashed var(--accent);text-underline-offset:3px}
+  .legend .li:hover .li-n{color:var(--accent)}
+  .legend .li-p{font-size:12px;color:var(--muted)}
+  /* 用例结果分布：柱状图 | 文字说明 | 环形图 一行三列 */
+  .chart-row{display:flex;align-items:center;gap:16px;flex:1}
+  .chart-row .bar-box{flex:1.4;min-width:0}
+  .chart-row .legend{flex:1;min-width:0}
+  .chart-row .donut-box{flex:1;display:flex;justify-content:center}
+  /* 测试报告：左侧 版本概览 / Bug 结论（上下两块，中间分隔线），右侧 用例结果分布 */
+  .report-grid{grid-template-columns:1fr 1.15fr;align-items:stretch}
+  .report-col{display:grid}
+  .report-col .divider{border:none;border-top:2px dashed #ffd9ea;margin:16px 0}
+  /* 用例结果分布：卡片高度与左侧对齐，上部环图 + 下部柱状分析 */
+  #fold-chart{display:flex;flex-direction:column}
+  #fold-chart .fold-body{flex:1;display:flex;flex-direction:column;justify-content:space-between;gap:18px}
+  .bar-chart{width:100%}
+  .bar-chart svg{display:block;width:100%;height:auto}
   .req-table-card{background:#fff;border:1.5px solid #ffe1ef;border-radius:var(--radius);box-shadow:var(--shadow);padding:16px}
   .req-table-card h4{font-size:14px;color:var(--accent);margin-bottom:12px;display:flex;align-items:center;gap:8px}
   .req-table-card h4 svg{width:16px;height:16px;fill:var(--accent)}
@@ -243,9 +365,13 @@
     .logo{font-size:17px}
     .grid2{grid-template-columns:1fr}
     .form{grid-template-columns:1fr}
-    .row .meta{flex-wrap:wrap}
+    .row .meta{grid-template-columns:1fr;gap:4px}
     .metrics{grid-template-columns:repeat(2,1fr)}
     .fold-grid{grid-template-columns:1fr}
+    .report-grid{grid-template-columns:1fr}
+    .chart-row{flex-direction:column;gap:18px}
+    .edit-form{grid-template-columns:1fr;gap:12px}
+    .modal.md{max-width:100%}
     .report-actions .left,.report-actions .right{width:100%}
     .report-actions .left .btn,.report-actions .right .btn{flex:1}
   }
@@ -282,7 +408,7 @@
   <section class="ver-sec">
     <div class="iter-bar" id="verBar"></div>
     <div class="form" style="margin-top:0">
-      <div class="full"><label>新建版本（如 V2.3）</label><div style="display:flex;gap:8px;flex-wrap:nowrap;align-items:center"><input id="i_name" placeholder="如：V2.3" style="flex:1;min-width:120px"><input id="i_start" type="date" title="开始时间" style="min-width:120px"><input id="i_end" type="date" title="结束时间" style="min-width:120px"><button class="icon-btn add" data-action="add-iter" title="新建版本"><svg viewBox="0 0 24 24"><path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/></svg></button><button class="icon-btn del" data-action="del-iter" title="删除当前版本"><svg viewBox="0 0 24 24"><path d="M6 7h12v13a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1V7zm3-3h6l1 2h4v2H2V6h4l1-2z"/></svg></button></div></div>
+      <div class="full"><label>新建版本</label><div style="display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:8px;align-items:center"><input id="i_name" style="min-width:0"><div class="date-field"><span class="date-ph">开始时间</span><input id="i_start" type="date" title="开始时间"></div><div class="date-field"><span class="date-ph">结束时间</span><input id="i_end" type="date" title="结束时间"></div><button class="btn primary" data-action="add-iter" title="新建版本" style="width:100%;min-width:0;display:flex;align-items:center;justify-content:center;white-space:nowrap"><svg viewBox="0 0 24 24" width="14" height="14" style="vertical-align:-2px;margin-right:4px;fill:currentColor"><path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/></svg>添加版本</button><button class="btn danger" data-action="del-iter" title="删除当前版本" style="width:100%;min-width:0;display:flex;align-items:center;justify-content:center;white-space:nowrap"><svg viewBox="0 0 24 24" width="14" height="14" style="vertical-align:-2px;margin-right:4px;fill:currentColor"><path d="M6 7h12v13a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1V7zm3-3h6l1 2h4v2H2V6h4l1-2z"/></svg>删除版本</button></div></div>
     </div>
   </section>
 
@@ -299,53 +425,52 @@
     <div class="card">
       <h3><svg viewBox="0 0 24 24"><path d="M4 4h16v3H4V4zm0 6h16v3H4v-3zm0 6h10v3H4v-3z"/></svg>版本需求</h3>
       <div class="stats" id="planStats"></div>
-      <div class="form">
+      <div class="form form6">
         <div class="full"><label>需求名称</label><input id="r_name" placeholder="如：需求A-登录改版"></div>
         <div><label>产品经理</label><select id="r_pm"><option>岳香</option><option>张依婷</option></select></div>
-        <div><label>编写用例状态</label><select id="r_write"><option>未开始</option><option>编写中</option><option>已完成</option></select></div>
-        <div><label>用例来源</label><select id="r_source"><option>codex</option><option>trae</option><option>handwriting</option></select></div>
-        <div><label>测试状态</label><select id="r_test"><option>未开始</option><option>测试中</option><option>通过</option><option>失败</option><option>阻塞</option></select></div>
+        <div><label>前端</label><input id="r_front"></div>
+        <div><label>后端</label><input id="r_back"></div>
+        <div><label>编写用例状态</label><select id="r_write"><option>未开始</option><option>编写中</option><option>已完成</option><option>无需编写</option></select></div>
+        <div><label>用例来源</label><select id="r_source"><option value=""></option><option>codex</option><option>trae</option><option>handwriting</option></select></div>
+        <div><label>测试状态</label><select id="r_test"><option>未开始</option><option>待测试</option><option>测试中</option><option>已完成</option><option>无需执行</option></select></div>
         <div class="form-actions"><button class="btn primary" data-action="add-req">+ 添加需求</button></div>
       </div>
-      <div class="grid2" id="planList"></div>
+      <div class="pm-cols" id="planList"></div>
     </div>
   </section>
 
   <!-- 测试用例（本地 Excel 只读） -->
   <section class="panel hidden" id="panel-cases">
     <div class="card">
-      <h3><svg viewBox="0 0 24 24"><path d="M4 4h16v16H4V4zm2 2v12h12V6H6z"/></svg>测试用例（本地 Excel · 只读）</h3>
+      <h3><svg viewBox="0 0 24 24"><path d="M20 2H4c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zM8 20H4v-4h4v4zm0-6H4v-4h4v4zm0-6H4V4h4v4zm6 12h-4v-4h4v4zm0-6h-4v-4h4v4zm0-6h-4V4h4v4zm6 12h-4v-4h4v4zm0-6h-4v-4h4v4zm0-6h-4V4h4v4z"/></svg>测试用例（本地 Excel · 只读）</h3>
       <div class="stats" id="caseStats"></div>
       <div class="folder-bar">
         <div class="fb-field">
-          <label>Excel 文件（可多选，每个 xlsx = 一个需求）</label>
-          <div style="display:flex;gap:8px"><input id="folderInput" placeholder="尚未选择文件" readonly style="flex:1"><button class="btn" data-action="pick-folder"><svg viewBox="0 0 24 24" width="14" height="14" style="vertical-align:-2px;margin-right:4px;fill:currentColor"><path d="M14 2H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V8l-6-6zm2 16H8v-2h8v2zm0-4H8v-2h8v2zm-3-5V3.5L18.5 9H13z"/></svg>选择文件</button></div>
+          <label>Excel 文件（可多选，每个 xlsx = 一个需求用例）</label>
+          <div style="display:flex;gap:8px;align-items:center"><div id="folderInput" class="file-chips" style="flex:1"></div><button class="btn" data-action="pick-folder"><svg viewBox="0 0 24 24" width="14" height="14" style="vertical-align:-2px;margin-right:4px;fill:currentColor"><path d="M14 2H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V8l-6-6zm2 16H8v-2h8v2zm0-4H8v-2h8v2zm-3-5V3.5L18.5 9H13z"/></svg>选择文件</button><button class="btn" data-action="refresh-cases">刷新</button><button class="btn" id="autoBtn" data-action="toggle-auto">自动刷新</button></div>
         </div>
-        <button class="btn" data-action="refresh-cases">刷新</button>
         <input type="file" id="folderFallback" accept=".xlsx,.xls" style="display:none" multiple>
-        <span class="readonly-note"><svg viewBox="0 0 24 24"><path d="M12 2a5 5 0 0 0-5 5v2a5 5 0 0 0-3 9 4 4 0 0 0 3 6h10a4 4 0 0 0 3-6 5 5 0 0 0-3-9V7a5 5 0 0 0-5-5zm0 4a1 1 0 0 1 1 1v1h-2V7a1 1 0 0 1 1-1z"/></svg>只读 · 本地解析不上传 · 每个 xlsx = 一个需求</span>
       </div>
-      <div class="grid2" id="caseList"></div>
+      <div class="pm-cols" id="caseList"></div>
     </div>
   </section>
 
-  <!-- 缺陷 Bug -->
+  <!-- 缺陷 Bug（本地 Excel 只读） -->
   <section class="panel hidden" id="panel-bugs">
     <div class="card">
       <div class="card-head">
-        <h3><svg viewBox="0 0 24 24"><path d="M12 2a4 4 0 0 0-4 4v1a5 5 0 0 0-2 9v2h12v-2a5 5 0 0 0-2-9V6a4 4 0 0 0-4-4z"/></svg>缺陷 Bug</h3>
-        <button class="btn primary" data-action="export-bugs"><svg viewBox="0 0 24 24"><path d="M5 20h14v-2H5v2zM12 2L7 7h3v6h4V7h3l-5-5z"/></svg>导出本版本 Bug</button>
+        <h3><svg viewBox="0 0 24 24"><path d="M12 2a4 4 0 0 0-4 4v1a5 5 0 0 0-2 9v2h12v-2a5 5 0 0 0-2-9V6a4 4 0 0 0-4-4z"/></svg>缺陷 Bug（本地 Excel · 只读）</h3>
+        <button class="btn primary" data-action="export-bugs"><svg viewBox="0 0 24 24"><path d="M5 20h14v-2H5v2zM12 2L7 7h3v6h4V7h3l-5-5z"/></svg>导出 Bug</button>
       </div>
       <div class="stats white" id="bugStats"></div>
-      <div class="bug-form">
-        <div class="bf-wide"><label title="读取当前版本测试计划中添加的需求">关联需求</label><select id="b_req"><option value="">（无 / 其他）</option></select></div>
-        <div class="bf-wide"><label>bug 简述</label><input id="b_title" placeholder="如：列表分页错位"></div>
-        <div><label>严重级别</label><select id="b_sev"><option>致命</option><option>严重</option><option>一般</option><option>轻微</option></select></div>
-        <div><label>研发</label><input id="b_owner" placeholder="如：前端-李"></div>
-        <div><label>测试验收</label><select id="b_status"><option>未验证</option><option>新建</option><option>修复中</option><option>已关闭</option><option>拒绝</option></select></div>
-        <div class="bf-actions"><button class="icon-add" data-action="add-bug" title="添加 Bug"><svg viewBox="0 0 24 24"><path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/></svg></button></div>
+      <div class="folder-bar">
+        <div class="fb-field">
+          <label>缺陷 Excel 文件（单个 xlsx，Sheet 名「缺陷Bug」，含列：关联需求 / bug简述 / 缺陷描述 / 严重级别 / 研发 / 测试验收）</label>
+          <div style="display:flex;gap:8px;align-items:center"><div id="bugFileInput" class="file-chips" style="flex:1"></div><button class="btn" data-action="pick-bug-file"><svg viewBox="0 0 24 24" width="14" height="14" style="vertical-align:-2px;margin-right:4px;fill:currentColor"><path d="M14 2H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V8l-6-6zm2 16H8v-2h8v2zm0-4H8v-2h8v2zm-3-5V3.5L18.5 9H13z"/></svg>选择文件</button><button class="btn" data-action="remove-bug-file">移除</button><button class="btn" data-action="refresh-bugs">刷新</button><button class="btn" id="bugAutoBtn" data-action="toggle-bug-auto">自动刷新</button></div>
+        </div>
+        <input type="file" id="bugFileFallback" accept=".xlsx,.xls" style="display:none">
       </div>
-      <div class="grid2" id="bugList"></div>
+      <div id="bugList"></div>
     </div>
   </section>
 
@@ -362,18 +487,28 @@
         <button class="btn primary" data-action="export-report"><svg viewBox="0 0 24 24"><path d="M5 20h14v-2H5v2zM12 2L7 7h3v6h4V7h3l-5-5z"/></svg>导出本版本报告</button>
       </div>
     </div>
-    <div class="fold-grid">
-      <div class="fold-card" id="fold-overview">
-        <div class="fold-head" data-action="toggle-fold" data-target="fold-overview"><h4><svg viewBox="0 0 24 24"><path d="M4 4h16v3H4V4zm0 6h16v3H4v-3zm0 6h10v3H4v-3z"/></svg><span class="fold-title">版本概览</span></h4><svg class="chev" viewBox="0 0 24 24"><path d="M7 10l5 5 5-5H7z"/></svg></div>
-        <div class="fold-body" id="overviewBody"></div>
+    <div class="fold-grid report-grid">
+      <div class="report-col">
+        <div class="fold-card" id="fold-overview">
+          <div class="fold-head" data-action="toggle-fold" data-target="fold-overview"><h4><svg viewBox="0 0 24 24"><path d="M4 4h16v3H4V4zm0 6h16v3H4v-3zm0 6h10v3H4v-3z"/></svg><span class="fold-title">版本概览</span></h4><svg class="chev" viewBox="0 0 24 24"><path d="M7 10l5 5 5-5H7z"/></svg></div>
+          <div class="fold-body" id="overviewBody"></div>
+        </div>
+        <hr class="divider">
+        <div class="fold-card" id="fold-bug">
+          <div class="fold-head" data-action="toggle-fold" data-target="fold-bug"><h4><svg viewBox="0 0 24 24"><path d="M12 2a4 4 0 0 0-4 4v1a5 5 0 0 0-2 9v2h12v-2a5 5 0 0 0-2-9V6a4 4 0 0 0-4-4z"/></svg><span class="fold-title">Bug 结论</span></h4><svg class="chev" viewBox="0 0 24 24"><path d="M7 10l5 5 5-5H7z"/></svg></div>
+          <div class="fold-body" id="bugBody"></div>
+        </div>
+        <div class="fold-card" id="fold-note">
+          <div class="fold-head" data-action="toggle-fold" data-target="fold-note"><h4><svg viewBox="0 0 24 24"><path d="M3 17.25V21h3.75L17.8 9.94l-3.75-3.75L3 17.25zM20.71 7.04a1 1 0 0 0 0-1.41l-2.34-2.34a1 1 0 0 0-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"/></svg><span class="fold-title">测试备注</span></h4><svg class="chev" viewBox="0 0 24 24"><path d="M7 10l5 5 5-5H7z"/></svg></div>
+          <div class="fold-body">
+            <textarea id="repNote" rows="4" placeholder="记录本版本的意外情况：如需求变更、环境故障、延期原因、遗留风险等" style="width:100%;border:1.5px solid var(--border);border-radius:10px;padding:10px;font-size:13px;line-height:1.6;resize:vertical"></textarea>
+            <div class="note-tip">内容随当前版本保存，导出报告时会一并包含</div>
+          </div>
+        </div>
       </div>
       <div class="fold-card" id="fold-chart">
         <div class="fold-head" data-action="toggle-fold" data-target="fold-chart"><h4><svg viewBox="0 0 24 24"><path d="M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20zm0 4a6 6 0 1 1 0 12 6 6 0 0 1 0-12z"/></svg><span class="fold-title">用例结果分布</span></h4><svg class="chev" viewBox="0 0 24 24"><path d="M7 10l5 5 5-5H7z"/></svg></div>
         <div class="fold-body" id="chartBody"></div>
-      </div>
-      <div class="fold-card" id="fold-bug">
-        <div class="fold-head" data-action="toggle-fold" data-target="fold-bug"><h4><svg viewBox="0 0 24 24"><path d="M12 2a4 4 0 0 0-4 4v1a5 5 0 0 0-2 9v2h12v-2a5 5 0 0 0-2-9V6a4 4 0 0 0-4-4z"/></svg><span class="fold-title">Bug 结论</span></h4><svg class="chev" viewBox="0 0 24 24"><path d="M7 10l5 5 5-5H7z"/></svg></div>
-        <div class="fold-body" id="bugBody"></div>
       </div>
     </div>
     <div class="req-table-card">
@@ -392,6 +527,55 @@
     <div class="acts">
       <button class="btn" id="mCancel">取消</button>
       <button class="btn danger" id="mOk">确认</button>
+    </div>
+  </div>
+</div>
+
+<!-- 版本编辑弹窗 -->
+<div class="mask" id="iterMask">
+  <div class="modal md">
+    <div class="modal-head"><svg viewBox="0 0 24 24"><path d="M3 17.25V21h3.75L17.8 9.94l-3.75-3.75L3 17.25zM20.71 7.04a1 1 0 0 0 0-1.41l-2.34-2.34a1 1 0 0 0-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"/></svg><h3>编辑版本</h3></div>
+    <div class="edit-form">
+      <div class="full"><label>版本名称</label><input id="e_name"></div>
+      <div><label>开始时间</label><div class="date-field"><span class="date-ph">开始时间</span><input id="e_start" type="date"></div></div>
+      <div><label>结束时间</label><div class="date-field"><span class="date-ph">结束时间</span><input id="e_end" type="date"></div></div>
+    </div>
+    <div class="acts">
+      <button class="btn" id="iterCancel">取消</button>
+      <button class="btn primary" id="iterSave">保存</button>
+    </div>
+  </div>
+</div>
+
+<!-- 需求编辑弹窗 -->
+<div class="mask" id="reqMask">
+  <div class="modal md">
+    <div class="modal-head"><svg viewBox="0 0 24 24"><path d="M3 17.25V21h3.75L17.8 9.94l-3.75-3.75L3 17.25zM20.71 7.04a1 1 0 0 0 0-1.41l-2.34-2.34a1 1 0 0 0-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"/></svg><h3>编辑需求</h3></div>
+    <div class="edit-form">
+      <div class="full"><label>需求名称</label><input id="q_name"></div>
+      <div class="col">
+        <div class="field"><label>产品经理</label><select id="q_pm"></select></div>
+        <div class="field"><label>前端</label><input id="q_front"></div>
+        <div class="field"><label>后端</label><input id="q_back"></div>
+      </div>
+      <div class="col">
+        <div class="field"><label>编写用例状态</label><select id="q_write"></select></div>
+        <div class="field"><label>用例来源</label><select id="q_source"></select></div>
+        <div class="field"><label>测试状态</label><select id="q_test"></select></div>
+      </div>
+      <div class="full req-case">
+        <label>测试用例</label>
+        <div class="rcu-row">
+          <span id="reqCaseName" class="rcu-name">尚未上传用例</span>
+          <label class="btn ghost rcu-btn">上传 Excel<input type="file" id="reqCaseFile" accept=".xlsx,.xls" hidden></label>
+          <button class="btn ghost rcu-btn" id="reqCaseRemove" style="display:none">移除</button>
+        </div>
+        <div class="rcu-tip">上传该需求专属的用例 Excel（仅含本需求用例），将直接同步到「测试用例」板块，并把「编写用例状态」置为已完成</div>
+      </div>
+    </div>
+    <div class="acts">
+      <button class="btn" id="reqCancel">取消</button>
+      <button class="btn primary" id="reqSave">保存</button>
     </div>
   </div>
 </div>
@@ -423,30 +607,51 @@
 
 <script>
 /* ============ 数据层（计划/缺陷：localStorage；用例：服务端） ============ */
-const K={bugs:'wb_test_bugs',iterations:'wb_test_iterations',cases:'wb_cases_v'};
+const K={bugs:'wb_test_bugs',iterations:'wb_test_iterations',cases:'wb_cases_v',curIter:'wb_test_curiter'};
 const state={tab:'plans',bugs:[],iterations:[],curIter:null};
-let casesData={requirements:[],stats:{总需求数:0,总用例:0,已通过:0,失败:0,整体通过率:0},casesFolder:'',options:[]};
+let casesData={requirements:[],stats:{总需求数:0,总用例:0,已通过:0,失败:0,整体通过率:0},options:[]};
 let casesCache={};
-function load(){
-  state.bugs=read(K.bugs);state.iterations=read(K.iterations);if(state.iterations.length)state.curIter=state.iterations[0].id;
-  // 加载所有版本的用例缓存
+async function load(){
+  state.iterations=read(K.iterations);
+  // 加载所有版本的用例缓存：IndexedDB 优先，localStorage 兜底
   casesCache={};
+  try{const idb=await dbGetCases();Object.assign(casesCache,idb);}catch(e){}
   for(let i=0;i<localStorage.length;i++){
     const key=localStorage.key(i);
-    if(key&&key.startsWith(K.cases+'_')){try{casesCache[key.slice(K.cases.length+1)]=JSON.parse(localStorage.getItem(key));}catch(e){}}
+    if(key&&key.startsWith(K.cases+'_')){try{
+      const id=key.slice(K.cases.length+1),localCases=JSON.parse(localStorage.getItem(key));
+      // localStorage 是同步写入的；当 IndexedDB 中残留空缓存时，不能让它覆盖刚导入的用例。
+      const idbCases=casesCache[id];
+      const hasCases=d=>!!(d&&Array.isArray(d.requirements)&&d.requirements.length);
+      if(!idbCases||(!hasCases(idbCases)&&hasCases(localCases)))casesCache[id]=localCases;
+    }catch(e){}}
   }
+  // 优先用持久化的当前版本；若该版本无缓存但其它版本有缓存，自动切到有数据的版本（防止刷新后卡片丢失）
+  const sc=localStorage.getItem(K.curIter);
+  let cur=(sc&&state.iterations.some(i=>i.id===sc))?sc:null;
+  const hasData=id=>casesCache[id]&&casesCache[id].requirements&&casesCache[id].requirements.length;
+  if(!cur||!hasData(cur)){
+    const alt=state.iterations.find(i=>hasData(i.id));
+    cur=alt?alt.id:(state.iterations.length?state.iterations[0].id:null);
+  }
+  state.curIter=cur;
   syncCasesForVersion();
 }
 function read(k){try{const v=localStorage.getItem(k);return v?JSON.parse(v):[]}catch(e){return[]}}
-function save(){localStorage.setItem(K.bugs,JSON.stringify(state.bugs));localStorage.setItem(K.iterations,JSON.stringify(state.iterations));}
-function saveCasesForVersion(){
+/* 缺陷不再落盘：唯一数据源为用户选择的本地 Excel，state.bugs 仅为 Excel 数据的内存镜像 */
+function save(){localStorage.setItem(K.iterations,JSON.stringify(state.iterations));localStorage.setItem(K.curIter,state.curIter||'');}
+async function saveCasesForVersion(){
   if(!state.curIter)return;
   casesCache[state.curIter]=JSON.parse(JSON.stringify(casesData));
-  localStorage.setItem(K.cases+'_'+state.curIter,JSON.stringify(casesData));
+  try{localStorage.setItem(K.cases+'_'+state.curIter,JSON.stringify(casesData));}catch(e){}
+  await dbPutCase(state.curIter,casesData);
 }
 function syncCasesForVersion(){
   if(state.curIter&&casesCache[state.curIter])casesData=JSON.parse(JSON.stringify(casesCache[state.curIter]));
-  else casesData={requirements:[],stats:{总需求数:0,总用例:0,已通过:0,失败:0,整体通过率:0},casesFolder:'',options:[]};
+  else casesData={requirements:[],stats:{总需求数:0,总用例:0,已通过:0,失败:0,整体通过率:0},options:[]};
+  normalizeCachedCaseResults(casesData);
+  loadVersionFiles(); // 文件选择跟随版本：切换后显示该版本自己选过的文件
+  syncBugsForVersion(); // 缺陷跟随版本：切换后恢复该版本自己的缺陷 Excel（无记录则空）
 }
 function uid(){return Date.now().toString(36)+Math.random().toString(36).slice(2,6)}
 function todayStr(){const d=new Date();return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0')}
@@ -457,91 +662,422 @@ function seed(){
   const y=(()=>{const d=new Date();d.setDate(d.getDate()-1);return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0')})();
   const vid=uid();
   state.iterations=[{id:vid,name:'V2.3',reqs:[
-    {id:uid(),name:'需求A-登录改版',pm:'岳香',writeStatus:'已完成',source:'codex',testStatus:'通过'},
+    {id:uid(),name:'需求A-登录改版',pm:'岳香',writeStatus:'已完成',source:'codex',testStatus:'已完成'},
     {id:uid(),name:'需求B-支付优化',pm:'岳香',writeStatus:'编写中',source:'trae',testStatus:'测试中'},
     {id:uid(),name:'需求C-报表导出',pm:'张依婷',writeStatus:'未开始',source:'handwriting',testStatus:'未开始'},
-    {id:uid(),name:'需求D-消息推送',pm:'张依婷',writeStatus:'已完成',source:'codex',testStatus:'失败'}
+    {id:uid(),name:'需求D-消息推送',pm:'张依婷',writeStatus:'已完成',source:'codex',testStatus:'测试中'}
   ]}];
   state.curIter=vid;
-  state.bugs=[
-    {id:uid(),version:vid,relatedReq:'需求A-登录改版',title:'登录页验证码刷新异常',sev:'严重',owner:'后端-王',status:'新建'},
-    {id:uid(),version:vid,relatedReq:'需求B-支付优化',title:'列表分页错位',sev:'一般',owner:'前端-李',status:'修复中'}
-  ];
   save();
 }
 
 /* ============ 计算层 ============ */
 function collectToday(){
-  // 待处理事项 = 当前版本下未关闭的 Bug（推进到「已关闭」后自动移出）
-  if(!state.curIter)return [];
-  return state.bugs
-    .filter(b=>b.version===state.curIter&&b.status!=='已关闭')
-    .map(b=>({type:'bug',id:b.id,title:b.title,sub:'Bug · '+(b.sev||'')+' · 研发：'+(b.owner||'未指派'),level:'warn'}));
+  // 左：当前版本「测试中」的需求；中：待测试；右：当前版本未关闭（待修复）的 Bug
+  const out={reqs:[],readyReqs:[],bugs:[]};
+  if(!state.curIter)return out;
+  const it=curIter();
+  out.reqs=(it?(it.reqs||[]):[]).filter(r=>r.testStatus==='测试中');
+  out.readyReqs=(it?(it.reqs||[]):[]).filter(r=>r.testStatus==='待测试');
+  out.bugs=(bugData||[]).filter(b=>b.status!=='已解决');
+  return out;
 }
 
 /* ============ 渲染层 ============ */
 function esc(s){return String(s==null?'':s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]))}
-function statCard(n,l){return `<div class="stat"><div class="n">${n}</div><div class="l">${esc(l)}</div></div>`}
+function statCard(n,l,cls='',result=''){return `<div class="stat ${cls}"${result?' data-action="show-result-cases" data-result="'+esc(result)+'"':''}><div class="n">${n}</div><div class="l">${esc(l)}</div></div>`}
 function renderToday(){
-  const items=collectToday();const box=document.getElementById('todayList');
-  if(!items.length){box.innerHTML='<div class="empty">今天没有待处理事项，干得漂亮！</div>';return;}
-  box.innerHTML=items.map(it=>{
-    let btn='';
-    if(it.type==='bug') btn='<button class="btn primary t-btn" data-action="advance-bug" data-id="'+it.id+'">推进状态</button>';
-    else if(it.type==='req') btn='<button class="btn primary t-btn" data-action="req-handle" data-iter="'+it.iter+'" data-id="'+it.id+'">'+(it.sub.indexOf('用例未编写')>=0?'标记已编写':'标记通过')+'</button>';
-    const tag=it.level==='overdue'?'<span class="t-tag overdue">逾期</span>':it.level==='due'?'<span class="t-tag due">今日截止</span>':'<span class="t-tag warn">待处理</span>';
-    return `<div class="t-item ${it.level}">${tag}<div class="t-body"><div class="t-title">${esc(it.title)}</div><div class="t-sub">${esc(it.sub)}</div></div>${btn}</div>`;
-  }).join('');
+  const {reqs,readyReqs,bugs}=collectToday();
+  const box=document.getElementById('todayList');
+  const reqHtml=reqs.length?reqs.map(r=>
+    '<div class="t-item warn"><span class="t-tag warn">测试中</span><div class="t-body"><div class="t-title">'+esc(r.name)+'</div><div class="t-sub">'+esc('产品经理：'+(r.pm||'-')+' · 前端：'+(r.front||'-')+' · 后端：'+(r.back||'-'))+'</div></div></div>'
+  ).join(''):'<div class="empty">暂无测试中的需求</div>';
+  const readyHtml=readyReqs.length?readyReqs.map(r=>
+    '<div class="t-item"><span class="t-tag due">待测试</span><div class="t-body"><div class="t-title">'+esc(r.name)+'</div><div class="t-sub">'+esc('产品经理：'+(r.pm||'-')+' · 前端：'+(r.front||'-')+' · 后端：'+(r.back||'-'))+'</div></div></div>'
+  ).join(''):'<div class="empty">暂无待测试的需求</div>';
+  const bugHtml=bugs.length?bugs.map(b=>
+    '<div class="t-item warn"><span class="t-tag warn">待修复</span><div class="t-body"><div class="t-title">'+esc(b.title)+'</div><div class="t-sub">'+esc('Bug · '+(b.sev||'')+' · 研发：'+(b.owner||'未指派'))+'</div></div><button class="btn primary t-btn" data-action="open-bug" data-id="'+b.id+'">查看详情</button></div>'
+  ).join(''):'<div class="empty">暂无待修复的 Bug</div>';
+  box.innerHTML='<div class="today-cols">'+
+    '<div class="today-col"><div class="t-col-head">测试中的需求（'+reqs.length+'）</div>'+reqHtml+'</div>'+
+    '<div class="today-col"><div class="t-col-head">待测试（'+readyReqs.length+'）</div>'+readyHtml+'</div>'+
+    '<div class="today-col"><div class="t-col-head">待修复的 Bug（'+bugs.length+'）</div>'+bugHtml+'</div>'+
+  '</div>';
 }
+/* ============ 缺陷 Bug（本地 Excel 只读看板） ============ */
+const BUG_SHEET='缺陷Bug';
+const BUG_REQ_COLS=['关联需求','bug简述','缺陷描述','严重级别','研发','测试验收'];
+const BUG_COL_ALIAS={
+  '关联需求':['关联需求','需求','需求名称','所属需求','所属模块'],
+  'bug简述':['bug简述','bug 简述','Bug简述','简述','标题','bug标题','缺陷标题'],
+  '缺陷描述':['缺陷描述','描述','详细说明','详情','缺陷详情'],
+  '严重级别':['严重级别','严重程度','级别','严重性','严重等级'],
+  '研发':['研发','开发人员','责任人','处理人','开发'],
+  '测试验收':['测试验收','验收','验收状态','状态','测试状态']
+};
+const BUG_SEV=['致命','严重','一般','轻微'];
+const BUG_STA=['未验证','已解决','回归失败'];
+const BUG_STA_ORDER={'回归失败':0,'未验证':1,'已解决':2};
+function normHd(s){return String(s==null?'':s).replace(/[\s\u00a0\u3000]+/g,'').toLowerCase();}
+/* 缺陷数据只来自 Excel，仅存内存，不写入 localStorage */
+let bugData=[];
+let bugHandle=null,bugFileName='',bugModified=0;
+const BUG_COLLAPSED=new Set();
+const BUG_HS_KEY='bug_handle',BUG_HS_MODE='bug_mode',BUG_LABEL='wb_bug_file';
+/* 缺陷文件选择按版本隔离：每个迭代各自记住所选缺陷 Excel */
+const bugHsKey=()=>state.curIter?('bug_handle_'+state.curIter):null;
+const bugLabelKey=()=>BUG_LABEL+'_'+(state.curIter||'none');
+
+function parseBugExcel(ab,fileName){
+  if(typeof XLSX==='undefined')throw new Error('Excel 组件未加载，请刷新页面后重试');
+  const wb=XLSX.read(ab,{type:'array'});
+  const hit=wb.SheetNames.find(n=>normHd(n)===normHd(BUG_SHEET));
+  if(!hit)throw new Error('文件「'+fileName+'」中未找到名为「'+BUG_SHEET+'」的工作表（当前工作表：'+(wb.SheetNames.join('、')||'无')+'）');
+  const rows=XLSX.utils.sheet_to_json(wb.Sheets[hit],{defval:'',raw:false});
+  if(!rows.length)return [];
+  const headers=Object.keys(rows[0]);
+  const map={},missing=[];
+  BUG_REQ_COLS.forEach(std=>{
+    const alias=BUG_COL_ALIAS[std].map(normHd);
+    const found=headers.find(h=>alias.includes(normHd(h)));
+    if(found)map[std]=found;else missing.push(std);
+  });
+  if(missing.length)throw new Error('工作表「'+BUG_SHEET+'」缺少必填列：'+missing.join('、')+'。\n必需列为：'+BUG_REQ_COLS.join('、'));
+  const pick=(row,std)=>{const v=row[map[std]];return v==null?'':String(v).trim();};
+  const normSev=v=>{
+    const s=normHd(v);const h2=BUG_SEV.find(x=>normHd(x)===s);if(h2)return h2;
+    if(/致命|fatal|blocker/.test(s))return '致命';
+    if(/严重|serious|major|high/.test(s))return '严重';
+    if(/轻微|minor|trivial|low/.test(s))return '轻微';
+    return '一般';
+  };
+  const normSta=v=>{
+    const s=normHd(v);const h2=BUG_STA.find(x=>normHd(x)===s);if(h2)return h2;
+    if(/回归失败|reopen|重开|复现/.test(s))return '回归失败';
+    if(/已解决|已修复|已关闭|closed|fixed|done|通过/.test(s))return '已解决';
+    return '未验证';
+  };
+  return rows.map((row,i)=>{
+    const title=pick(row,'bug简述'),desc=pick(row,'缺陷描述');
+    return {id:'BUG'+(i+1),relatedReq:pick(row,'关联需求')||'（未关联需求）',title:title||desc,desc,sev:normSev(pick(row,'严重级别')),owner:pick(row,'研发'),status:normSta(pick(row,'测试验收'))};
+  }).filter(b=>b.title||b.desc);
+}
+/* ---- 缺陷文件管理（句柄持久化，样式对齐测试用例页） ---- */
+function setBugFileChip(name){
+  const box=document.getElementById('bugFileInput');if(!box)return;
+  box.innerHTML=name?'<span class="fc-count" title="'+esc(name)+'">'+esc(name)+'</span>':'<span class="fc-empty">尚未选择文件</span>';
+}
+async function saveBugHandle(handle){
+  const key=bugHsKey();if(!key)return;
+  try{
+    const db=await openHandlesDB();
+    await new Promise((res,rej)=>{
+      const tx=db.transaction(HS_STORE,'readwrite'),store=tx.objectStore(HS_STORE);
+      store.put(handle,key);store.put('bug',BUG_HS_MODE);
+      tx.oncomplete=()=>res();tx.onerror=()=>rej(tx.error);
+    });
+    db.close();
+  }catch(e){console.warn('缺陷文件句柄保存失败',e);}
+}
+/* 旧版全局缺陷记录一次性清理（迁移后调用，防止新版本反复继承） */
+async function removeBugLegacy(){
+  try{localStorage.removeItem(BUG_LABEL);}catch(e){}
+  try{
+    const db=await openHandlesDB();
+    await new Promise((res,rej)=>{const tx=db.transaction(HS_STORE,'readwrite'),st=tx.objectStore(HS_STORE);st.delete(BUG_HS_KEY);st.delete(BUG_HS_MODE);tx.oncomplete=()=>res();tx.onerror=()=>rej(tx.error);});
+    db.close();
+  }catch(e){}
+}
+/* 切换版本时按版本恢复缺陷文件：新迭代无记录则列表为空 */
+async function syncBugsForVersion(){
+  stopBugAuto();
+  bugHandle=null;bugFileName='';bugModified=0;bugData=[];state.bugs=[];BUG_COLLAPSED.clear();
+  if(!state.curIter){setBugFileChip('');renderBugs();renderToday();if(state.tab==='report')renderReport();return;}
+  let name='';
+  try{name=localStorage.getItem(bugLabelKey())||'';}catch(e){}
+  let handle=null;const key=bugHsKey();
+  try{
+    const db=await openHandlesDB();
+    const saved=await new Promise((res,rej)=>{
+      const tx=db.transaction(HS_STORE,'readonly'),store=tx.objectStore(HS_STORE);
+      if(!key){res({handle:null,legacy:null});return;}
+      const hRq=store.get(key),lRq=store.get(BUG_HS_KEY),mRq=store.get(BUG_HS_MODE);
+      tx.oncomplete=()=>res({handle:hRq.result,legacy:lRq.result,mode:mRq.result});tx.onerror=()=>rej(tx.error);
+    });
+    db.close();
+    if(saved.mode==='bug'&&saved.handle){handle=saved.handle;removeBugLegacy();} // 已有按版本记录，顺手清掉旧全局数据
+    else if(saved.legacy){handle=saved.legacy;await saveBugHandle(handle);await removeBugLegacy();} // 旧全局数据一次性迁移后立即删除
+  }catch(e){console.warn('缺陷句柄恢复失败',e);}
+  if(handle){
+    bugHandle=handle;bugFileName=name;setBugFileChip(name);
+    await bugAutoOnce();
+    let waked=false;
+    const bugWake=()=>{if(waked)return;waked=true;bugAutoOnce();};
+    document.addEventListener('pointerdown',bugWake,{capture:true});
+    document.addEventListener('keydown',bugWake,{capture:true});
+  }else{
+    setBugFileChip(name);bugFileName=name;
+    renderBugs();renderToday();if(state.tab==='report')renderReport();
+  }
+}
+async function clearBugHandle(){
+  stopBugAuto();
+  bugHandle=null;bugFileName='';bugModified=0;bugData=[];state.bugs=[];BUG_COLLAPSED.clear();
+  try{localStorage.removeItem(bugLabelKey());}catch(e){}
+  try{
+    const db=await openHandlesDB();
+    await new Promise((res,rej)=>{const tx=db.transaction(HS_STORE,'readwrite'),store=tx.objectStore(HS_STORE);if(bugHsKey())store.delete(bugHsKey());store.delete(BUG_HS_KEY);store.delete(BUG_HS_MODE);tx.oncomplete=()=>res();tx.onerror=()=>rej(tx.error);});
+    db.close();
+  }catch(e){}
+  setBugFileChip('');renderBugs();renderToday();if(state.tab==='report')renderReport();
+}
+async function applyBugFile(file,handle,silent){
+  try{
+    const list=parseBugExcel(await file.arrayBuffer(),file.name);
+    bugData=list;state.bugs=list;   // 报告 / 今日待办复用同一份 Excel 数据
+    bugFileName=file.name;bugModified=file.lastModified||0;
+    if(handle){bugHandle=handle;await saveBugHandle(handle);}
+    try{localStorage.setItem(bugLabelKey(),file.name);}catch(e){}
+    setBugFileChip(file.name);
+    renderBugs();renderToday();if(state.tab==='report')renderReport();
+  }catch(e){
+    console.error(e);
+    const msg=String(e.message||e);
+    if(/占用|被另一|locked|denied|notreadable/i.test(msg))alert('文件可能正被 Excel / WPS 占用，请关闭该文件后重试。\n\n'+msg);
+    else alert('读取缺陷文件失败：'+msg);
+    if(!silent)renderBugs();
+  }
+}
+async function pickBugFile(){
+  if(window.showOpenFilePicker){
+    try{
+      const arr=await window.showOpenFilePicker({multiple:false});
+      const h=arr[0];
+      if(!/\.xlsx?$/i.test(h.name)||h.name.startsWith('~$')){alert('请选择 .xlsx / .xls 文件');return;}
+      let file;try{file=await h.getFile();}catch(err){alert('文件读取失败（可能已被移动或删除）：'+(err.message||err));return;}
+      await applyBugFile(file,h);
+    }catch(e){if(e.name!=='AbortError'){console.error(e);alert('选择文件失败：'+(e.message||e));}}
+    return;
+  }
+  document.getElementById('bugFileFallback').click();
+}
+async function refreshBugs(){
+  if(!bugHandle){
+    alert(bugFileName?'文件授权已失效，请重新点击「选择文件」。':'请先点击「选择文件」选择缺陷 Excel。');
+    return;
+  }
+  let file;
+  try{
+    if(bugHandle.queryPermission){
+      let p=await bugHandle.queryPermission({mode:'read'});
+      if(p!=='granted'&&bugHandle.requestPermission)p=await bugHandle.requestPermission({mode:'read'});
+      if(p!=='granted'){alert('未获得文件读取授权，请重新点击「选择文件」。');return;}
+    }
+    file=await bugHandle.getFile();
+  }catch(e){
+    console.error(e);
+    alert('无法读取文件，可能已被移动、重命名或删除。\n可点击「移除」后重新选择。\n\n'+(e.message||e));
+    return;
+  }
+  await applyBugFile(file,bugHandle);
+}
+/* 自动刷新：定时比对文件修改时间，Excel 保存后自动同步 */
+let bugAutoTimer=null;const BUG_AUTO_MS=5000;
+function updateBugAutoBtn(){
+  const b=document.getElementById('bugAutoBtn');if(!b)return;
+  b.classList.toggle('primary',!!bugAutoTimer);
+  b.textContent=bugAutoTimer?'自动刷新中':'自动刷新';
+}
+function stopBugAuto(){if(bugAutoTimer){clearInterval(bugAutoTimer);bugAutoTimer=null;}updateBugAutoBtn();}
+async function bugAutoOnce(){
+  if(!bugHandle)return;
+  try{
+    const file=await bugHandle.getFile();
+    if(file.lastModified&&file.lastModified===bugModified)return;   // 文件未改动则跳过
+    await applyBugFile(file,bugHandle,true);
+  }catch(e){console.warn('缺陷自动刷新失败',e);}
+}
+function toggleBugAuto(){
+  if(bugAutoTimer){stopBugAuto();return;}
+  if(!bugHandle){alert('请先点击「选择文件」，再开启自动刷新。');return;}
+  bugAutoTimer=setInterval(()=>{if(!document.hidden)bugAutoOnce();},BUG_AUTO_MS);
+  updateBugAutoBtn();
+}
+function restoreBugFileName(){
+  try{const n=localStorage.getItem(bugLabelKey());if(n){bugFileName=n;setBugFileChip(n);}}catch(e){}
+}
+/* ---- 渲染：按关联需求分组折叠（只读，无新增/删除） ---- */
 function renderBugs(){
-  const ver=state.curIter,bs=state.bugs.filter(b=>b.version===ver);
+  const bs=bugData||[];
   document.getElementById('bugStats').innerHTML=
-    statCard(bs.length,'总Bug')+statCard(bs.filter(b=>b.status!=='已关闭').length,'未关闭')+statCard(bs.filter(b=>b.status==='已关闭').length,'已关闭');
-  populateReqSelect();
-  document.getElementById('bugList').innerHTML=bs.length?bs.map(b=>
-    `<div class="bug-card" data-action="open-bug" data-id="${b.id}">
-      <div class="bc-title">${esc(b.title)}</div>
-      <div class="bc-tags"><span class="chip sev-${esc(b.sev)}">${esc(b.sev)}</span><span class="chip st-${esc(b.status)}">${esc(b.status)}</span></div>
-      <div class="bc-meta"><span>研发：${esc(b.owner||'-')}</span>${b.relatedReq?'<span>关联：'+esc(b.relatedReq)+'</span>':''}</div>
-      <button class="icon-btn" data-action="del-bug" data-id="${b.id}"><svg viewBox="0 0 24 24"><path d="M6 7h12v13a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1V7zm3-3h6l1 2h4v2H2V6h4l1-2z"/></svg></button>
-    </div>`
-  ).join(''):'<div class="empty">该版本下暂无 Bug。</div>';
+    statCard(bs.length,'总Bug')+statCard(bs.filter(b=>b.status!=='已解决').length,'未解决')+statCard(bs.filter(b=>b.status==='已解决').length,'已解决');
+  const box=document.getElementById('bugList');
+  if(!bugFileName){box.innerHTML='<div class="empty">尚未选择缺陷 Excel 文件，请点击上方「选择文件」。</div>';return;}
+  if(!bs.length){box.innerHTML='<div class="empty">已选择「'+esc(bugFileName)+'」，但未读取到缺陷数据。</div>';return;}
+  const groups={};
+  [...bs].sort((a,b)=>(BUG_STA_ORDER[a.status]??1)-(BUG_STA_ORDER[b.status]??1)).forEach(b=>{
+    const k=b.relatedReq||'（未关联需求）';(groups[k]=groups[k]||[]).push(b);
+  });
+  const keys=Object.keys(groups).filter(k=>k!=='（未关联需求）');
+  if(groups['（未关联需求）'])keys.push('（未关联需求）');
+  box.innerHTML='<table class="bug-table"><thead><tr><th>缺陷描述</th><th>严重级别</th><th>研发</th><th>测试验收</th></tr></thead><tbody>'
+    +keys.map(k=>{
+      const grp=groups[k],collapsed=BUG_COLLAPSED.has(k);
+      return '<tr class="bt-group" data-action="toggle-bug-group" data-req="'+esc(k)+'"><td colspan="4"><span class="grp-inner">'
+        +'<svg class="chev'+(collapsed?' rot':'')+'" viewBox="0 0 24 24"><path d="M7 10l5 5 5-5H7z"/></svg>'
+        +'<span class="req-name">'+esc(k)+'</span><span class="req-count">'+grp.length+' 个缺陷</span></span></td></tr>'
+        +grp.map(b=>'<tr data-action="open-bug" data-id="'+b.id+'" data-req="'+esc(k)+'"'+(collapsed?' style="display:none"':'')+'>'
+          +'<td class="bt-desc" title="'+esc(b.title)+'">'+esc(b.title)+'</td>'
+          +'<td class="bt-sev">'+esc(b.sev)+'</td>'
+          +'<td class="bt-own">'+esc(b.owner||'-')+'</td>'
+          +'<td class="bt-sta">'+esc(b.status)+'</td></tr>').join('');
+    }).join('')+'</tbody></table>';
 }
-function populateReqSelect(){
-  const sel=document.getElementById('b_req');if(!sel)return;
-  const it=curIter();
-  const names=it?[...new Set(it.reqs.map(r=>r.name).filter(Boolean))]:[];
-  const cur=sel.value;
-  sel.innerHTML='<option value="">（无 / 其他）</option>'+names.map(n=>'<option'+(n===cur?' selected':'')+'>'+esc(n)+'</option>').join('');
+function toggleBugGroup(el){
+  const req=el.dataset.req,hide=!BUG_COLLAPSED.has(req);
+  if(hide)BUG_COLLAPSED.add(req);else BUG_COLLAPSED.delete(req);
+  const chev=el.querySelector('.chev');if(chev)chev.classList.toggle('rot',hide);
+  document.querySelectorAll('#bugList tr[data-req]').forEach(r=>{if(r.dataset.req===req)r.style.display=hide?'none':'';});
 }
-const writeClass={'未开始':'w0','编写中':'w1','已完成':'w2'};
-const testClass={'未开始':'t0','测试中':'t1','通过':'t2','失败':'t3','阻塞':'t4'};
+const writeClass={'未开始':'w0','编写中':'w1','已完成':'w2','无需编写':'wn'};
+const testClass={'未开始':'t0','待测试':'t3','测试中':'t1','已完成':'t2','无需执行':'tn'};
 function curIter(){return state.iterations.find(i=>i.id===state.curIter)}
-function optSel(list,sel){return list.map(o=>'<option'+(o===sel?' selected':'')+'>'+o+'</option>').join('')}
+function optSel(list,sel,colors){if(sel&&list.indexOf(sel)<0)list=list.concat([sel]);return list.map(o=>'<option'+(colors&&colors[o]?' style="color:'+colors[o]+'"':'')+(o===sel?' selected':'')+'>'+o+'</option>').join('')}
+const OPT_COLORS={'未开始':'#6fb8e8','编写中':'#e08a00','待测试':'#b79ced','测试中':'#e08a00','已完成':'#46cfa0','无需编写':'#8a929c','无需执行':'#8a929c'};
 function renderIterBar(){
   const box=document.getElementById('verBar');
   if(!state.iterations.length){box.innerHTML='<div class="empty">还没有版本，先在上方新建一个（如 V2.3）。</div>';return;}
   box.innerHTML=state.iterations.map(it=>{
     const dr=(it.start||it.end)?(' · '+((it.start||'').slice(5)||'??')+'~'+((it.end||'').slice(5)||'??')):'';
-    return `<button class="tab ${it.id===state.curIter?'active':''}" data-action="switch-iter" data-id="${it.id}" title="${it.start?('开始：'+it.start):''}${it.end?('  结束：'+it.end):''}">${esc(it.name)} <span style="opacity:.7;font-size:12px">(${it.reqs.length}${dr})</span></button>`;
+    const tip=(it.start?('开始：'+it.start):'')+(it.end?('  结束：'+it.end):'');
+    return `<button class="tab ${it.id===state.curIter?'active':''}" data-action="switch-iter" data-id="${it.id}" title="${tip||'点击切换版本'}">
+      ${it.id===state.curIter?'<span class="cur-dot" title="当前版本"></span>':''}${esc(it.name)} <span style="opacity:.7;font-size:12px">(${it.reqs.length}${dr})</span>
+      <span class="edit-ico" data-action="edit-iter" data-id="${it.id}" title="编辑名称与时间"><svg viewBox="0 0 24 24"><path d="M3 17.25V21h3.75L17.8 9.94l-3.75-3.75L3 17.25zM20.71 7.04a1 1 0 0 0 0-1.41l-2.34-2.34a1 1 0 0 0-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"/></svg></span>
+    </button>`;
   }).join('');
+}
+/* ---- 版本编辑（名称 / 开始时间 / 结束时间） ---- */
+let editingIter=null,repNoteBound=false;
+function openIterEdit(id){
+  const it=state.iterations.find(x=>x.id===id);if(!it)return;
+  editingIter=id;
+  document.getElementById('e_name').value=it.name||'';
+  document.getElementById('e_start').value=it.start||'';
+  document.getElementById('e_end').value=it.end||'';
+  syncDatePhFields(['e_start','e_end']);
+  document.getElementById('iterMask').classList.add('show');
+}
+function closeIterEdit(){document.getElementById('iterMask').classList.remove('show');editingIter=null;}
+function saveIterEdit(){
+  const it=state.iterations.find(x=>x.id===editingIter);if(!it)return;
+  const name=document.getElementById('e_name').value.trim();
+  if(!name){alert('请填写版本名称');return;}
+  it.name=name;
+  it.start=document.getElementById('e_start').value;
+  it.end=document.getElementById('e_end').value;
+  save();closeIterEdit();refreshAll();
+}
+/* ---- 需求编辑（点击需求卡片） ---- */
+const REQ_PM=['岳香','张依婷'];
+const WRITE_STATUS=['未开始','编写中','已完成','无需编写'];
+const TEST_STATUS=['未开始','待测试','测试中','已完成','无需执行'];
+const TEST_ORDER=['测试中','待测试','未开始','已完成','无需执行'];
+const REQ_SOURCE=['','codex','trae','handwriting'];
+let editingReq=null;
+function openReqEdit(iterId,id){
+  const it=state.iterations.find(x=>x.id===iterId);if(!it)return;
+  const r=it.reqs.find(x=>x.id===id);if(!r)return;
+  editingReq={iterId,id};
+  document.getElementById('q_name').value=r.name||'';
+  document.getElementById('q_pm').innerHTML=optSel(REQ_PM,r.pm||REQ_PM[0]);
+  document.getElementById('q_front').value=r.front||'';
+  document.getElementById('q_back').value=r.back||'';
+  document.getElementById('q_write').innerHTML=optSel(WRITE_STATUS,r.writeStatus||'未开始',OPT_COLORS);
+  document.getElementById('q_source').innerHTML=optSel(REQ_SOURCE,r.source||'');
+  document.getElementById('q_test').innerHTML=optSel(TEST_STATUS,r.testStatus||'未开始',OPT_COLORS);
+  document.getElementById('reqMask').classList.add('show');
+  updateReqCaseUI();
+}
+/* 编辑需求弹窗内「上传测试用例」相关：把某需求专属的 Excel 直接并入「测试用例」板块 */
+function updateReqCaseUI(){
+  const nameEl=document.getElementById('reqCaseName');const rm=document.getElementById('reqCaseRemove');
+  if(!editingReq||!nameEl)return;
+  const it=state.iterations.find(x=>x.id===editingReq.iterId);if(!it)return;
+  const r=it.reqs.find(x=>x.id===editingReq.id);if(!r)return;
+  const g=(casesData.requirements||[]).find(x=>x.file==='req_'+r.id);
+  if(g){nameEl.textContent=g.uploadName||'已上传用例';nameEl.classList.add('on');rm.style.display='';}
+  else{nameEl.textContent='尚未上传用例';nameEl.classList.remove('on');rm.style.display='none';}
+}
+async function uploadReqCase(file){
+  if(!editingReq)return;
+  const it=state.iterations.find(x=>x.id===editingReq.iterId);if(!it)return;
+  const r=it.reqs.find(x=>x.id===editingReq.id);if(!r)return;
+  let ab;try{ab=await file.arrayBuffer();}catch(e){alert('读取文件失败：'+(e.message||e));return;}
+  const g=parseExcelBufferReq(ab,file.name,r.id,r.name);
+  if(!g||!g.cases.length){
+    let info='';
+    try{if(typeof XLSX!=='undefined'){const w=XLSX.read(ab,{type:'array'});info='（工作表：'+(w.SheetNames.join('、')||'无')+'）';}}catch(e){}
+    alert('未从 Excel 中解析到用例'+info+'。请确认文件中有数据行，且表头包含「用例编号 / 验证名称」等列。');
+    return;
+  }
+  const reqs=(casesData.requirements||[]).filter(x=>x.file!=='req_'+r.id && x.requirement!==r.name);
+  reqs.push(g);
+  setClientCases(reqs,pickedHandles);
+  r.writeStatus='已完成';
+  document.getElementById('q_write').innerHTML=optSel(WRITE_STATUS,r.writeStatus,OPT_COLORS);
+  save();refreshAll();updateReqCaseUI();
+}
+function removeReqCase(){
+  if(!editingReq)return;
+  const it=state.iterations.find(x=>x.id===editingReq.iterId);if(!it)return;
+  const r=it.reqs.find(x=>x.id===editingReq.id);if(!r)return;
+  const reqs=(casesData.requirements||[]).filter(x=>x.file!=='req_'+r.id);
+  setClientCases(reqs,pickedHandles,{replaceReq:true});
+  r.writeStatus='未开始';
+  document.getElementById('q_write').innerHTML=optSel(WRITE_STATUS,r.writeStatus,OPT_COLORS);
+  save();refreshAll();updateReqCaseUI();
+}
+function closeReqEdit(){document.getElementById('reqMask').classList.remove('show');editingReq=null;}
+function saveReqEdit(){
+  if(!editingReq)return;
+  const it=state.iterations.find(x=>x.id===editingReq.iterId);if(!it)return;
+  const r=it.reqs.find(x=>x.id===editingReq.id);if(!r)return;
+  const name=val('q_name');if(!name){alert('请填写需求名称');return;}
+  r.name=name;r.pm=val('q_pm');r.front=val('q_front');r.back=val('q_back');
+  r.writeStatus=val('q_write');r.source=val('q_source');r.testStatus=val('q_test');
+  save();closeReqEdit();refreshAll();
 }
 function renderPlanStats(){
   const it=curIter();if(!it){document.getElementById('planStats').innerHTML='';return;}
   const rs=it.reqs,tot=rs.length;
   const wd=rs.filter(r=>r.writeStatus==='已完成').length;
-  const pass=rs.filter(r=>r.testStatus==='通过').length;
-  const risk=rs.filter(r=>r.testStatus==='失败'||r.testStatus==='阻塞').length;
+  const doing=rs.filter(r=>r.testStatus==='测试中').length;
+  const done=rs.filter(r=>r.testStatus==='已完成').length;
+  // 「无需编写/无需执行」记为完成（计入分子），分母用总需求数
+  const nw=rs.filter(r=>r.writeStatus==='无需编写').length;
+  const nt=rs.filter(r=>r.testStatus==='无需执行').length;
   document.getElementById('planStats').innerHTML=
-    statCard(tot,'需求总数')+statCard(wd+'/'+tot,'用例已编写')+statCard(pass+'/'+tot,'测试通过')+statCard(risk,'风险(失败/阻塞)');
+    statCard(tot,'需求总数')
+    +statCard((wd+nw)+'/'+tot,'用例已编写'+(nw?'（含'+nw+'无需）':''))
+    +statCard(doing+'/'+tot,'测试中')
+    +statCard((done+nt)+'/'+tot,'测试完成'+(nt?'（含'+nt+'无需）':''));
 }
 function renderReqs(){
   const it=curIter();
   if(!it){document.getElementById('planList').innerHTML='';return;}
   if(!it.reqs.length){document.getElementById('planList').innerHTML='<div class="empty">该版本还没有需求，在上方添加。</div>';return;}
-  document.getElementById('planList').innerHTML=it.reqs.map(r=>
-    `<div class="row"><div class="main"><div class="ttl">${esc(r.name)}</div><div class="meta"><span>PM：${esc(r.pm||'-')}</span><select class="mini ${writeClass[r.writeStatus]}" data-action="upd-req" data-iter="${it.id}" data-id="${r.id}" data-field="writeStatus">${optSel(['未开始','编写中','已完成'],r.writeStatus)}</select><select class="mini ${testClass[r.testStatus]}" data-action="upd-req" data-iter="${it.id}" data-id="${r.id}" data-field="testStatus">${optSel(['未开始','测试中','通过','失败','阻塞'],r.testStatus)}</select></div></div><button class="icon-btn" data-action="del-req" data-iter="${it.id}" data-id="${r.id}"><svg viewBox="0 0 24 24"><path d="M6 7h12v13a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1V7zm3-3h6l1 2h4v2H2V6h4l1-2z"/></svg></button></div>`
-  ).join('');
+  const sorted=[...it.reqs].sort((a,b)=>TEST_ORDER.indexOf(a.testStatus)-TEST_ORDER.indexOf(b.testStatus));
+  const card=r=>`<div class="row clickable" data-action="edit-req" data-iter="${it.id}" data-id="${r.id}" title="点击编辑需求"><div class="main"><div class="ttl">${esc(r.name)}</div><div class="meta"><span>PM：${esc(r.pm||'-')}</span><span>前端：${esc(r.front||'-')}</span><span>后端：${esc(r.back||'-')}</span></div><div class="meta-row"><div class="mini-field"><span class="mini-lbl">编写用例状态</span><select class="mini ${writeClass[r.writeStatus]}" data-action="upd-req" data-iter="${it.id}" data-id="${r.id}" data-field="writeStatus">${optSel(WRITE_STATUS,r.writeStatus,OPT_COLORS)}</select></div><div class="mini-field"><span class="mini-lbl">用例来源</span><select class="mini w0" data-action="upd-req" data-iter="${it.id}" data-id="${r.id}" data-field="source">${optSel(REQ_SOURCE,r.source)}</select></div><div class="mini-field"><span class="mini-lbl">测试状态</span><select class="mini ${testClass[r.testStatus]}" data-action="upd-req" data-iter="${it.id}" data-id="${r.id}" data-field="testStatus">${optSel(TEST_STATUS,r.testStatus,OPT_COLORS)}</select></div></div></div><button class="icon-btn" data-action="del-req" data-iter="${it.id}" data-id="${r.id}"><svg viewBox="0 0 24 24"><path d="M6 7h12v13a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1V7zm3-3h6l1 2h4v2H2V6h4l1-2z"/></svg></button></div>`;
+  // 按 PM 分成两列（岳香 / 张依婷），其余 PM 依次追加
+  const pms=[...REQ_PM];
+  sorted.forEach(r=>{if(r.pm&&!pms.includes(r.pm))pms.push(r.pm);});
+  document.getElementById('planList').innerHTML=pms.map(pm=>{
+    const items=sorted.filter(r=>(r.pm||'')===pm);
+    return `<div class="pm-col">
+      <div class="pm-col-head">${esc(pm)}<span class="pm-col-count">${items.length}</span></div>
+      <div class="pm-col-body">${items.length?items.map(card).join(''):'<div class="empty">暂无需求</div>'}</div>
+    </div>`;
+  }).join('');
 }
 function renderPlans(){renderPlanStats();renderReqs();}
 
@@ -550,14 +1086,58 @@ function rbClass(r){
   switch(r){
     case '已通过':return 'rb rb-pass';
     case '失败':return 'rb rb-fail';
+    case '无法执行':return 'rb rb-navalidate';
     case '未执行':return 'rb rb-noexec';
-    case '待确认':return 'rb rb-pending';
-    case '无法验证':return 'rb rb-navalidate';
     case '无需验证':return 'rb rb-noverify';
     case '部分通过':return 'rb rb-partial';
-    case '后续优化':return 'rb rb-later';
     default:return 'rb rb-noverify';
   }
+}
+/* 测试结果状态（与 Excel 下拉选项一致） */
+const CASE_RESULTS=[
+  {label:'已通过',color:'#46cfa0'},
+  {label:'失败',color:'#ff6b81'},
+  {label:'无法执行',color:'#ffb454'},
+  {label:'未执行',color:'#d1d5db'},
+  {label:'无需验证',color:'#9ccdf0'},
+  {label:'部分通过',color:'#facc15'}
+];
+/* 柱状图展示与 Excel 一致的全部 6 类测试结果。 */
+const BAR_RESULTS=['已通过','失败','无法执行','未执行','无需验证','部分通过'];
+function countResults(){
+  const map={};
+  (casesData.requirements||[]).forEach(r=>(r.cases||[]).forEach(c=>{const k=c.result||'其他';map[k]=(map[k]||0)+1;}));
+  return map;
+}
+/* 柱状分析图（带 Y 轴刻度与网格线） */
+function axisScale(v){
+  if(v<=4)return {max:4,step:1};
+  const x=v/4;
+  const cands=[1,2,3,4,5,6,8,10,15,20,25,30,40,50,60,80,100,150,200,300,400,500,800,1000];
+  const step=cands.find(s=>s>=x)||Math.ceil(x/1000)*1000;
+  return {max:step*4,step};
+}
+function barChartSVG(data){
+  const w=420,h=230,padL=34,padR=8,padT=16,padB=36;
+  const plotW=w-padL-padR,plotH=h-padT-padB;
+  const yAxis=axisScale(Math.max(0,...data.map(d=>d.count)));
+  const max=yAxis.max;
+  const step=data.length?plotW/data.length:plotW;
+  const bw=Math.max(6,Math.min(20,step*0.5));
+  let g='';
+  for(let i=0;i<=4;i++){
+    const y=(padT+plotH*i/4).toFixed(1);
+    g+=`<line x1="${padL}" y1="${y}" x2="${w-padR}" y2="${y}" stroke="#ffe1ef" stroke-width="1" stroke-dasharray="4 4"/>`;
+    g+=`<text x="${padL-8}" y="${(Number(y)+4).toFixed(1)}" text-anchor="end" font-size="11" fill="#a7899c">${max-yAxis.step*i}</text>`;
+  }
+  data.forEach((d,i)=>{
+    const bh=plotH*(d.count/max);
+    const x=padL+step*i+step/2, y=padT+plotH-bh;
+    g+=`<rect x="${(x-bw/2).toFixed(1)}" y="${y.toFixed(1)}" width="${bw.toFixed(1)}" height="${Math.max(bh,1).toFixed(1)}" rx="5" fill="${d.color}"/>`;
+    g+=`<text x="${x.toFixed(1)}" y="${(y-6).toFixed(1)}" text-anchor="middle" font-size="11" font-weight="700" fill="#5b4654">${d.count}</text>`;
+    g+=`<text x="${x.toFixed(1)}" y="${(h-10).toFixed(1)}" text-anchor="middle" font-size="11" fill="#a7899c">${esc(d.label)}</text>`;
+  });
+  return `<svg viewBox="0 0 ${w} ${h}" role="img">${g}</svg>`;
 }
 function statusTag(s){
   if(s==='存在失败')return '<span class="tag-status s-fail">存在失败</span>';
@@ -565,28 +1145,52 @@ function statusTag(s){
   return '<span class="tag-status s-doing">进行中</span>';
 }
 function renderCases(){
-  const s=casesData.stats;
+  // 兼容旧缓存：每次渲染都由明细重新汇总，六种状态不会因旧 stats 结构而遗漏。
+  const s=buildClientStats(casesData.requirements||[]);
   document.getElementById('caseStats').innerHTML=
-    statCard(s.总需求数,'总需求数')+statCard(s.总用例,'总用例')+statCard(s.已通过,'已通过')+statCard(s.失败,'失败')+statCard(s.整体通过率+'%','整体通过率');
+    statCard(s.总用例,'总用例','stat-total')+
+    statCard(s.未执行,'未执行','stat-noexec','未执行')+
+    statCard(s.已通过,'已通过','stat-pass','已通过')+
+    statCard(s.失败,'失败','stat-fail','失败')+
+    statCard(s.无法执行,'无法执行','stat-navalidate','无法执行')+
+    statCard(s.无需验证,'无需验证','stat-noverify','无需验证')+
+    statCard(s.部分通过,'部分通过','stat-partial','部分通过')+
+    statCard(s.整体通过率+'%','整体通过率（含无法执行、无需验证）','stat-rate');
   const reqs=casesData.requirements;
   if(!reqs.length){
-    document.getElementById('caseList').innerHTML='<div class="empty">未读取到 Excel。请确认上方文件夹路径正确，且该文件夹下有 .xlsx 文件（每个文件 = 一个需求）。</div>';
+    document.getElementById('caseList').innerHTML='<div class="empty">尚未导入 Excel。请点击上方「选择文件」并选择一个或多个 .xlsx / .xls 测试用例文件。</div>';
     return;
   }
-  document.getElementById('caseList').innerHTML=reqs.map(r=>{
-    const cls=r.status==='存在失败'?'hasfail':'';
+  // 按状态排序：存在失败 → 进行中 → 已完成
+  const sorted=[...reqs].sort((a,b)=>(CASE_STATUS_ORDER[clientStatus(a)]??1)-(CASE_STATUS_ORDER[clientStatus(b)]??1));
+  const card=r=>{
+    const st=clientStatus(r);
+    const cls=st==='存在失败'?'hasfail':'';
+    const c=caseCounts(r),rate=clientPassRate(r);   // 新口径通过率
     return `<div class="req-card" data-action="open-req" data-file="${esc(r.file)}">
-      <div class="rc-top"><div class="rc-name">${esc(r.requirement)}</div>${statusTag(r.status)}</div>
-      <div class="rc-meta"><span>用例 ${r.total}</span><span>通过 ${r.passed}</span><span>失败 ${r.failed}</span><span class="rc-pct">${r.passRate}%</span></div>
-      <div class="rc-bar"><i class="${cls}" style="width:${r.passRate}%"></i></div>
+      <div class="rc-top"><div class="rc-name" title="${esc(r.requirement)}">${esc(r.requirement)}</div><div class="rc-right">${statusTag(st)}<button class="icon-btn del" data-action="del-case-req" data-file="${esc(r.file)}" title="删除该需求用例"><svg viewBox="0 0 24 24"><path d="M6 7h12v13a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1V7zm3-3h6l1 2h4v2H2V6h4l1-2z"/></svg></button></div></div>
+      <div class="rc-meta"><span>用例 ${r.total}</span>${RESULT_OPTIONS_CLIENT.map(k=>`<span>${k} ${c[k]}</span>`).join('')}<span class="rc-pct">${rate}%</span></div>
+      <div class="rc-bar"><i class="${cls}" style="width:${rate}%"></i></div>
     </div>`;
-  }).join('');
+  };
+  // 按 PM 分两列（岳香 / 张依婷），其余 PM 依次追加，未匹配的归入「未分配」
+  const pms=[...REQ_PM];
+  sorted.forEach(r=>{const pm=reqPM(r.requirement);if(pm!=='-'&&!pms.includes(pm))pms.push(pm);});
+  const cols=pms.map(pm=>({name:pm,items:sorted.filter(r=>reqPM(r.requirement)===pm)}));
+  const unmatched=sorted.filter(r=>reqPM(r.requirement)==='-');
+  if(unmatched.length)cols.push({name:'未分配',items:unmatched});
+  document.getElementById('caseList').innerHTML=cols.map(c=>
+    `<div class="pm-col">
+      <div class="pm-col-head">${esc(c.name)}<span class="pm-col-count">${c.items.length}</span></div>
+      <div class="pm-col-body">${c.items.length?c.items.map(card).join(''):'<div class="empty">暂无需求</div>'}</div>
+    </div>`
+  ).join('');
 }
 function openReq(file){
   const r=casesData.requirements.find(x=>x.file===file);if(!r)return;
   document.getElementById('caseModalTitle').textContent=r.requirement;
   document.getElementById('caseModalSub').innerHTML=
-    `<span>用例总数：${r.total}</span><span>已通过：${r.passed}</span><span>失败：${r.failed}</span><span>通过率：${r.passRate}%</span>${statusTag(r.status)}`;
+    `<span>用例总数：${r.total}</span><span>已通过：${r.passed}</span><span>失败：${r.failed}</span><span>通过率：${clientPassRate(r)}%</span>${statusTag(r.status)}`;
   const head=['用例编号','验证名称','优先级','用例类型','前置条件','操作步骤','预期结果','测试结果'];
   let html='<thead><tr>'+head.map(h=>'<th>'+h+'</th>').join('')+'</tr></thead><tbody>';
   html+=r.cases.map(c=>
@@ -605,6 +1209,35 @@ function openReq(file){
   document.getElementById('caseTable').innerHTML=html;
   document.getElementById('caseMask').classList.add('show');
 }
+function showResultCases(result){
+  const rows=[];
+  (casesData.requirements||[]).forEach(r=>{
+    (r.cases||[]).forEach(c=>{
+      if((c.result||'其他')===result) rows.push({req:r.requirement,case:c});
+    });
+  });
+  document.getElementById('caseModalTitle').textContent=result+'（'+rows.length+'）';
+  document.getElementById('caseModalSub').innerHTML='<span>共涉及 '+casesData.requirements.filter(r=>(r.cases||[]).some(c=>(c.result||'其他')===result)).length+' 个需求</span>';
+  const withRemark=result!=='已通过';
+  const head=['需求名称','用例编号','验证名称'].concat(withRemark?['备注']:[]);
+  const cols=withRemark?4:3;
+  let html='<thead><tr>'+head.map(h=>'<th>'+h+'</th>').join('')+'</tr></thead><tbody>';
+  if(!rows.length){
+    html+='<tr><td colspan="'+cols+'" style="text-align:center;color:var(--muted)">没有该状态的用例</td></tr>';
+  }else{
+    html+=rows.map(({req,case:c})=>
+      '<tr>'+
+      '<td>'+esc(req)+'</td>'+
+      '<td class="num">'+esc(c.id)+'</td>'+
+      '<td>'+esc(c.name)+'</td>'+
+      (withRemark?'<td>'+esc(c.remark||'')+'</td>':'')+
+      '</tr>'
+    ).join('');
+  }
+  html+='</tbody>';
+  document.getElementById('caseTable').innerHTML=html;
+  document.getElementById('caseMask').classList.add('show');
+}
 
 /* ---- 报告 ---- */
 function reportMetrics(){
@@ -612,15 +1245,17 @@ function reportMetrics(){
   const reqs=it?it.reqs:[];
   const planTotal=reqs.length;
   const covered=reqs.filter(r=>r.writeStatus==='已完成').length;
-  const reqCov=planTotal?Math.round(covered/planTotal*100):0;
+  // 需求覆盖率：分母用总需求数，无需编写记为已覆盖（计入分子）
+  const nwRep=reqs.filter(r=>r.writeStatus==='无需编写').length;
+  const reqCov=planTotal?Math.round((covered+nwRep)/planTotal*100):0;
   const cs=casesData.requirements;
-  let total=0,passed=0,failed=0,executed=0,notExec=0;
-  cs.forEach(r=>{r.cases.forEach(c=>{total++;if(c.result==='已通过')passed++;else if(c.result==='失败')failed++;if(c.result!=='未执行')executed++;else notExec++;});});
+  let total=0,passed=0,failed=0,executed=0,notExec=0,doneLike=0;
+  cs.forEach(r=>{r.cases.forEach(c=>{total++;if(c.result==='已通过')passed++;else if(c.result==='失败')failed++;if(PASS_LIKE_CLIENT.includes(c.result))doneLike++;if(c.result!=='未执行')executed++;else notExec++;});});
   const execRate=total?Math.round(executed/total*100):0;
-  const passRate=total?Math.round(passed/total*100):0;
-  const bs=state.bugs.filter(b=>b.version===ver);
-  const remain=bs.filter(b=>b.status!=='已关闭').length;
-  return {reqCov,execRate,passRate,remain,total,passed,failed,executed,notExec,reqCount:cs.length,bs,it};
+  const passRate=total?Math.round(doneLike/total*100):0;
+  const bs=bugData||[];   // 缺陷统一来自本地 Excel
+  const remain=bs.filter(b=>b.status!=='已解决').length;
+  return {reqCov,execRate,passRate,remain,total,passed,passedLike:doneLike,failed,executed,notExec,reqCount:planTotal,bs,it};
 }
 function donutChart(items){
   const total=items.reduce((s,i)=>s+i.count,0);
@@ -633,52 +1268,91 @@ function donutChart(items){
   });
   return `<div class="donut"><svg viewBox="0 0 120 120" width="120" height="120">${svg}</svg><div class="donut-center">${total}</div></div>`;
 }
+let reportSort={field:null,dir:1};
+function findPlanReq(name){
+  const it=curIter();if(!it)return null;
+  const nz=s=>String(s==null?'':s).replace(/\s+/g,'').replace(/[（）【】]/g,c=>({'（':'(','）':')','【':'[','】':']'}[c])).toLowerCase();
+  const key=nz(name),reqs=it.reqs||[];
+  return reqs.find(x=>nz(x.name)===key)||reqs.find(x=>{const k=nz(x.name);return k&&key&&(k.includes(key)||key.includes(k));})||null;
+}
+function reqPM(name){const r=findPlanReq(name);return r?(r.pm||'-'):'-';}
+function reqDev(name){const r=findPlanReq(name);if(!r)return '-';return '前端：'+(r.front||'-')+' / 后端：'+(r.back||'-');}
+/* 未执行：只统计「测试结果 = 未执行」的用例（与报告概览口径一致） */
+function reqNotExec(r){return (r.cases||[]).filter(c=>c.result==='未执行').length;}
 function renderReport(){
   const m=reportMetrics();
+  const caseRate=m.total?m.passRate+'%':'—';
+  const execRate=m.total?m.execRate+'%':'—';
   document.getElementById('repMetrics').innerHTML=
     `<div class="metrics">
       <div class="metric-card"><div class="n">${m.reqCov}%</div><div class="l">需求覆盖率</div></div>
-      <div class="metric-card"><div class="n">${m.execRate}%</div><div class="l">用例执行率</div></div>
-      <div class="metric-card"><div class="n">${m.passRate}%</div><div class="l">整体通过率</div></div>
+      <div class="metric-card"><div class="n">${execRate}</div><div class="l">用例执行率</div></div>
+      <div class="metric-card"><div class="n">${caseRate}</div><div class="l" title="（已通过 + 无法执行 + 无需验证）÷ 用例总数">整体通过率 ⓘ</div></div>
       <div class="metric-card"><div class="n">${m.remain}</div><div class="l">Bug 遗留数</div></div>
     </div>`;
   const title=m.it?esc(m.it.name):'未选版本';
   document.getElementById('overviewBody').innerHTML=
-    `<div class="kv-list">
+    `${m.total?'':'<div class="empty">尚未导入 Excel 用例；导入后将显示执行率、通过率及结果分布。</div>'}<div class="kv-list">
       <div class="kv"><span class="k">需求数</span><span class="v">${m.reqCount}</span></div>
       <div class="kv"><span class="k">用例总数</span><span class="v">${m.total}</span></div>
       <div class="kv"><span class="k">已执行</span><span class="v">${m.executed}</span></div>
       <div class="kv"><span class="k">未执行</span><span class="v">${m.notExec}</span></div>
-      <div class="kv"><span class="k">通过</span><span class="v">${m.passed}</span></div>
+      <div class="kv"><span class="k">通过</span><span class="v">${m.passedLike}</span></div>
       <div class="kv"><span class="k">失败</span><span class="v">${m.failed}</span></div>
     </div>`;
   document.querySelector('#fold-overview .fold-title').textContent=title+' 版本概览';
-  const others=m.total-m.passed-m.failed-m.notExec;
-  const chartData=[
-    {label:'已通过',count:m.passed,color:'#46cfa0'},
-    {label:'失败',count:m.failed,color:'#ff6b81'},
-    {label:'未执行',count:m.notExec,color:'#6fb8e8'},
-    {label:'其他',count:Math.max(0,others),color:'#b79ced'}
-  ];
+  const noteEl=document.getElementById('repNote');
+  if(!repNoteBound){repNoteBound=true;noteEl.addEventListener('input',e=>{const it=state.iterations.find(i=>i.id===state.curIter);if(it){it.note=e.target.value;save();}});}
+  noteEl.value=(m.it&&m.it.note)||'';
+  const rc=countResults();
+  const chartData=CASE_RESULTS.map(x=>({label:x.label,count:rc[x.label]||0,color:x.color}));
+  const known=CASE_RESULTS.reduce((s,x)=>s+(rc[x.label]||0),0);
+  if(m.total-known>0)chartData.push({label:'其他',count:m.total-known,color:'#cbb7d8'});
+  const legend=chartData.map(d=>{
+    const pct=m.total?Math.round(d.count/m.total*100):0;
+    return `<button type="button" class="li result-detail" data-result="${esc(d.label)}" aria-label="查看${esc(d.label)}用例明细"><span class="dot" style="background:${d.color}"></span><span>${esc(d.label)}</span><span class="li-n">${d.count}</span><span class="li-p">（${pct}%）</span></button>`;
+  }).join('');
+  // 柱状图只统计这 5 类（环形图与图例仍显示全部状态）
+  const barData=BAR_RESULTS.map(label=>chartData.find(d=>d.label===label)).filter(Boolean);
   document.getElementById('chartBody').innerHTML=
-    `<div class="donut-wrap">${donutChart(chartData)}<div class="legend">${chartData.map(d=>`<div class="li"><span class="dot" style="background:${d.color}"></span><span>${esc(d.label)} ${d.count}</span></div>`).join('')}</div></div>`;
+    `<div class="chart-row">
+      <div class="bar-box"><div class="bar-chart">${barChartSVG(barData)}</div></div>
+      <div class="legend">${legend}</div>
+      <div class="donut-box">${donutChart(chartData)}</div>
+    </div>`;
+  // 直接绑定新渲染的图例项，避免旧浏览器缓存/动态节点场景下事件委托失效。
+  document.querySelectorAll('#chartBody .result-detail').forEach(el=>{
+    el.addEventListener('click',e=>{e.stopPropagation();showResultCases(el.dataset.result);});
+  });
   const fatal=m.bs.filter(b=>b.sev==='致命').length;
   const serious=m.bs.filter(b=>b.sev==='严重').length;
   const normal=m.bs.filter(b=>b.sev==='一般').length;
   document.getElementById('bugBody').innerHTML=
     `<div class="bug-mini">
-      <div class="bm"><span class="n">${m.remain}</span><span class="t">未关闭</span></div>
+      <div class="bm"><span class="n">${m.remain}</span><span class="t">未解决</span></div>
       <div class="bm"><span class="n">${fatal}</span><span class="t">致命</span></div>
       <div class="bm"><span class="n">${serious}</span><span class="t">严重</span></div>
       <div class="bm"><span class="n">${normal}</span><span class="t">一般</span></div>
     </div>`;
-  const rows=casesData.requirements.map(r=>{
-    const t=r.total,p=r.passed,f=r.failed,n=t-p-f;
-    const rate=t?Math.round(p/t*100):0;
-    return `<tr><td>${esc(r.requirement)}</td><td class="center">${t}</td><td class="center">${p}</td><td class="center">${f}</td><td class="center">${n}</td><td class="center">${rate}%</td></tr>`;
+  const items=casesData.requirements.map(r=>{
+    const planReq=findPlanReq(r.requirement);
+    return Object.assign({},r,{pm:reqPM(r.requirement),rd:reqDev(r.requirement),requirement:planReq?planReq.name:r.requirement});
+  });
+  if(reportSort.field==='pm'){
+    items.sort((a,b)=>{
+      const x=a.pm||'',y=b.pm||'';
+      if(!x&&!y)return 0;if(!x)return 1;if(!y)return -1;
+      return x.localeCompare(y,'zh')*reportSort.dir;
+    });
+  }
+  const rows=items.map(r=>{
+    const t=r.total,p=clientPassedLike(r),f=r.failed,n=reqNotExec(r);
+    const rate=clientPassRate(r);
+    return `<tr><td>${esc(r.pm)}</td><td>${esc(r.requirement)}</td><td>${esc(r.rd).replace(' / ','<br>')}</td><td class="center">${t}</td><td class="center">${p}</td><td class="center">${f}</td><td class="center">${n}</td><td class="center">${rate}%</td></tr>`;
   }).join('');
+  const arrow=reportSort.field==='pm'?(reportSort.dir>0?' ↑':' ↓'):'';
   document.getElementById('reqTable').innerHTML=
-    `<thead><tr><th>需求名称</th><th class="center">用例总数</th><th class="center">通过数</th><th class="center">失败</th><th class="center">未执行行</th><th class="center">通过率</th></tr></thead><tbody>${rows||'<tr><td colspan="6" style="text-align:center;color:var(--muted)">暂无数据</td></tr>'}</tbody>`;
+    `<thead><tr><th class="sortable" data-action="sort-report" data-field="pm" style="cursor:pointer;user-select:none">产品经理${arrow}</th><th>需求名称</th><th>研发</th><th class="center">用例总数</th><th class="center">通过</th><th class="center">失败</th><th class="center">未执行</th><th class="center">通过率</th></tr></thead><tbody>${rows||'<tr><td colspan="8" style="text-align:center;color:var(--muted)">暂无数据</td></tr>'}</tbody>`;
 }
 function refreshAll(){
   renderIterBar();renderToday();renderBugs();renderPlans();renderCases();
@@ -688,70 +1362,75 @@ function refreshAll(){
   document.getElementById('panel-'+state.tab).classList.remove('hidden');
 }
 
-/* ============ 服务端交互（用例模块） ============ */
-function loadCases(){
-  return fetch('/api/cases').then(r=>r.json()).then(d=>{
-    if(d.error){casesData={requirements:[],stats:{总需求数:0,总用例:0,已通过:0,失败:0,整体通过率:0},casesFolder:d.casesFolder||'',options:[]};}
-    else casesData=d;
-    saveCasesForVersion();
-    renderCases();
-    if(state.tab==='report')renderReport();
-    populateReqSelect();
-  }).catch(()=>{
-    casesData={requirements:[],stats:{总需求数:0,总用例:0,已通过:0,失败:0,整体通过率:0},casesFolder:'',options:[]};
-    document.getElementById('caseList').innerHTML='<div class="empty">无法连接本地服务，请确认服务已启动（node server.js）。</div>';
-  });
-}
-function openStream(){
-  try{
-    const es=new EventSource('/api/cases/stream');
-    es.addEventListener('update',()=>loadCases());
-  }catch(e){}
-}
 
 /* ============ 交互层 ============ */
 function val(id){return document.getElementById(id).value.trim()}
-function clearForm(ids){ids.forEach(i=>document.getElementById(i).value='')}
+function clearForm(ids){ids.forEach(i=>document.getElementById(i).value='');syncDatePh()}
 function download(name,content,type){const b=new Blob([content],{type:type||'text/plain'});const u=URL.createObjectURL(b);const a=document.createElement('a');a.href=u;a.download=name;a.click();URL.revokeObjectURL(u)}
 
-function addBug(){
-  if(!state.curIter){alert('请先在顶部新建或选择一个版本');return;}
-  const title=val('b_title');if(!title)return;
-  state.bugs.push({id:uid(),version:state.curIter,relatedReq:val('b_req'),title,sev:val('b_sev'),owner:val('b_owner'),status:val('b_status')});
-  save();clearForm(['b_title','b_owner']);refreshAll();
-}
+
+/* 只读：缺陷来自 Excel，页面不提供新增 / 编辑 / 删除 */
 function openBug(id){
-  const b=state.bugs.find(x=>x.id===id);if(!b)return;
-  document.getElementById('bugModalTitle').textContent=b.title;
+  const b=(bugData||[]).find(x=>x.id===id);if(!b)return;
+  document.getElementById('bugModalTitle').textContent=b.title||'缺陷详情';
   document.getElementById('bugModalBody').innerHTML=
     '<dl class="bug-detail">'+
-    '<dt>关联需求</dt><dd>'+(esc(b.relatedReq||'-'))+'</dd>'+
-    '<dt>bug 简述</dt><dd>'+esc(b.title)+'</dd>'+
+    '<dt>关联需求</dt><dd>'+esc(b.relatedReq||'-')+'</dd>'+
+    '<dt>缺陷描述</dt><dd>'+esc(b.desc||'-')+'</dd>'+
     '<dt>严重级别</dt><dd><span class="chip sev-'+esc(b.sev)+'">'+esc(b.sev)+'</span></dd>'+
-    '<dt>研发</dt><dd>'+(esc(b.owner||'-'))+'</dd>'+
-    '<dt>测试验收</dt><dd><span class="chip st-'+esc(b.status)+'">'+esc(b.status)+'</span></dd>'+
-    '</dl>';
+    '<dt>研发</dt><dd>'+esc(b.owner||'-')+'</dd>'+
+    '<dt>测试验收</dt><dd>'+esc(b.status)+'</dd>'+
+    '</dl><div class="readonly-note"><svg viewBox="0 0 24 24"><path d="M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"/></svg>缺陷数据来自本地 Excel，页面为只读；如需修改请在 Excel 中编辑并保存。</div>';
   document.getElementById('bugMask').classList.add('show');
 }
 function exportBugs(){
   if(typeof XLSX==='undefined'){alert('Excel 组件未加载，请刷新页面后重试');return;}
-  const ver=state.curIter,it=state.iterations.find(i=>i.id===ver);
-  if(!it){alert('请先在顶部选择一个版本');return;}
-  const bs=state.bugs.filter(b=>b.version===ver);
-  const head=['关联需求','bug简述','严重级别','研发','测试验收'];
-  const rows=bs.map(b=>[b.relatedReq||'',b.title,b.sev,b.owner||'',b.status]);
+  if(!(bugData||[]).length){alert('暂无缺陷数据可导出，请先选择缺陷 Excel 文件。');return;}
+  const head=['关联需求','bug简述','缺陷描述','严重级别','研发','测试验收'];
+  const rows=bugData.map(b=>[b.relatedReq||'',b.title||'',b.desc||'',b.sev,b.owner||'',b.status]);
   const ws=XLSX.utils.aoa_to_sheet([head].concat(rows));
-  const wb=XLSX.utils.book_new();XLSX.utils.book_append_sheet(wb,ws,'本版本Bug');
-  XLSX.writeFile(wb,'Bug导出-'+it.name+'-'+todayStr()+'.xlsx');
+  const wb=XLSX.utils.book_new();XLSX.utils.book_append_sheet(wb,ws,BUG_SHEET);
+  XLSX.writeFile(wb,'Bug导出-'+todayStr()+'.xlsx');
 }
-function addIter(){const name=val('i_name');if(!name)return;const id=uid();state.iterations.unshift({id,name,start:val('i_start'),end:val('i_end'),reqs:[]});state.curIter=id;save();clearForm(['i_name','i_start','i_end']);refreshAll()}
-function delIter(){const id=state.curIter;state.iterations=state.iterations.filter(i=>i.id!==id);state.bugs=state.bugs.filter(b=>b.version!==id);delete casesCache[id];localStorage.removeItem(K.cases+'_'+id);state.curIter=state.iterations.length?state.iterations[0].id:null;syncCasesForVersion();save();refreshAll()}
-function addReq(){const it=curIter();if(!it){alert('请先新建一个迭代');return;}const name=val('r_name');if(!name)return;it.reqs.push({id:uid(),name,pm:val('r_pm'),writeStatus:val('r_write'),source:val('r_source'),testStatus:val('r_test')});save();clearForm(['r_name','r_pm','r_source']);refreshAll()}
+function addIter(){const name=val('i_name');if(!name)return;const id=uid();state.iterations.unshift({id,name,start:val('i_start'),end:val('i_end'),reqs:[]});state.curIter=id;save();clearForm(['i_name','i_start','i_end']);syncCasesForVersion();refreshAll()}
+function delIter(){const id=state.curIter;state.iterations=state.iterations.filter(i=>i.id!==id);delete casesCache[id];localStorage.removeItem(K.cases+'_'+id);dbDelCase(id);state.curIter=state.iterations.length?state.iterations[0].id:null;syncCasesForVersion();save();refreshAll()}
+/* 已删除的用例文件名集合：按版本持久化，刷新/重解析时自动过滤。 */
+const DEL_KEY='wb_del_cases';
+function delStorageKey(){return state.curIter?DEL_KEY+'_'+state.curIter:DEL_KEY;}
+function readDelSet(key){try{return new Set(JSON.parse(localStorage.getItem(key)||'[]'));}catch(e){return new Set();}}
+function getDelSet(){
+  const key=delStorageKey();let set=readDelSet(key);
+  // 兼容旧版全局记录：仅迁移到当前版本一次，避免之后影响其他版本。
+  if(state.curIter&&!set.size){
+    const legacy=readDelSet(DEL_KEY);
+    if(legacy.size){set=legacy;try{localStorage.setItem(key,JSON.stringify([...set]));localStorage.removeItem(DEL_KEY);}catch(e){}}
+  }
+  return set;
+}
+function saveDelSet(s){try{localStorage.setItem(delStorageKey(),JSON.stringify([...s]));}catch(e){}}
+function addDelFile(file){const s=getDelSet();s.add(file);saveDelSet(s);}
+function clearDelFiles(){try{for(let i=localStorage.length-1;i>=0;i--){const key=localStorage.key(i);if(key===DEL_KEY||key&&key.startsWith(DEL_KEY+'_'))localStorage.removeItem(key);}}catch(e){}}
+/* 重新选择文件（或文件夹）即视为用户明确恢复这些文件；避免旧删除标记把已成功读取的文件再次隐藏。 */
+function restoreDeletedFiles(files){
+  const names=new Set((files||[]).filter(f=>f&&f.name).map(f=>f.name));
+  if(!names.size)return;
+  const del=getDelSet();let changed=false;
+  for(const name of names){if(del.delete(name))changed=true;}
+  if(changed)saveDelSet(del);
+}
+
+async function delCaseReq(file){
+  casesData.requirements=(casesData.requirements||[]).filter(r=>r.file!==file);
+  pickedHandles=pickedHandles.filter(h=>h.name!==file);
+  addDelFile(file);  // 记录删除，刷新后仍不显示
+  await saveHandles(pickedHandles);
+  setClientCases(casesData.requirements,pickedHandles);
+}
+function addReq(){const it=curIter();if(!it){alert('请先新建一个迭代');return;}const name=val('r_name');if(!name)return;it.reqs.push({id:uid(),name,pm:val('r_pm'),front:val('r_front'),back:val('r_back'),writeStatus:val('r_write'),source:val('r_source'),testStatus:val('r_test')});save();clearForm(['r_name','r_pm','r_front','r_back','r_source']);refreshAll()}
 function delReq(iterId,id){const it=state.iterations.find(i=>i.id===iterId);if(it)it.reqs=it.reqs.filter(r=>r.id!==id);save();refreshAll()}
 function updReq(iterId,id,field,value){const it=state.iterations.find(i=>i.id===iterId);if(!it)return;const r=it.reqs.find(x=>x.id===id);if(r){r[field]=value;save();refreshAll()}}
-function reqHandle(iterId,id){const it=state.iterations.find(i=>i.id===iterId);if(!it)return;const r=it.reqs.find(x=>x.id===id);if(!r)return;if(r.writeStatus==='未开始')r.writeStatus='已完成';else if(r.testStatus==='失败'||r.testStatus==='阻塞')r.testStatus='通过';save();refreshAll()}
-const BUG_FLOW={'新建':'修复中','修复中':'已验证','已验证':'已关闭'};
-function advanceBug(id){const b=state.bugs.find(x=>x.id===id);if(b){b.status=BUG_FLOW[b.status]||'已关闭';save();refreshAll()}}
+function reqHandle(iterId,id){const it=state.iterations.find(i=>i.id===iterId);if(!it)return;const r=it.reqs.find(x=>x.id===id);if(!r)return;const flow=['未开始','待测试','测试中','已完成'];const idx=flow.indexOf(r.testStatus);r.testStatus=flow[(idx+1)%flow.length];save();refreshAll()}
+
 function del(arr,id){const i=arr.findIndex(x=>x.id===id);if(i>=0){arr.splice(i,1);save();refreshAll()}}
 /* ---------- 客户端选择文件 + 本地解析 Excel（不上云） ---------- */
 const ALIASES_CLIENT={
@@ -762,10 +1441,68 @@ const ALIASES_CLIENT={
   precond:['前置条件','前置','前提条件','前提'],
   steps:['操作步骤','步骤','操作','测试步骤'],
   expected:['预期结果','期望结果','预期','期望'],
-  result:['测试结果','结果','执行结果','状态']
+  result:['测试结果','结果','执行结果','状态'],
+  remark:['备注','说明','注释','remark','comment','note','备注说明']
 };
-const RESULT_OPTIONS_CLIENT=['已通过','失败','无法验证','未执行','无需验证','待确认','部分通过','后续优化'];
-function normClient(s){return String(s==null?'':s).trim().toLowerCase();}
+const RESULT_OPTIONS_CLIENT=['已通过','失败','无法执行','未执行','无需验证','部分通过'];
+const RESULT_ALIASES_CLIENT={
+  '已通过':['通过','pass','passed','成功','ok','yes','y'],
+  '失败':['不通过','fail','failed','错误','error','no','n','未通过'],
+  '无法执行':['无法验证','阻塞','block','blocked','挂起'],
+  '未执行':['未测','待执行','未跑'],
+  '无需验证':['忽略','skip','skipped','n/a','na','不适用'],
+  '部分通过':['部分','partial']
+};
+/* 新口径：已通过 + 无法执行 + 无需验证 都视为「通过」；未执行 / 失败 / 部分通过 不计入 */
+const PASS_LIKE_CLIENT=['已通过','无法执行','无需验证'];
+function caseCounts(r){
+  const c={};RESULT_OPTIONS_CLIENT.forEach(k=>c[k]=0);
+  (r.cases||[]).forEach(x=>{const k=x&&x.result;if(k in c)c[k]++;});
+  return c;
+}
+function clientPassedLike(r){const c=caseCounts(r);return PASS_LIKE_CLIENT.reduce((n,k)=>n+c[k],0);}
+function clientPassRate(r){return r.total?Math.round(clientPassedLike(r)/r.total*100):0;}
+const CASE_STATUS_ORDER={'存在失败':0,'进行中':1,'已完成':2};
+function clientStatus(r){
+  const c=caseCounts(r),doneLike=PASS_LIKE_CLIENT.reduce((n,k)=>n+c[k],0);
+  if(r.total&&(c['失败']>0||c['部分通过']>0))return '存在失败';
+  if(r.total&&doneLike===r.total)return '已完成';
+  return '进行中';
+}
+function buildClientStats(requirements){
+  const stats={总需求数:requirements.length,总用例:0,整体通过率:0};
+  RESULT_OPTIONS_CLIENT.forEach(result=>stats[result]=0);
+  requirements.forEach(r=>(r.cases||[]).forEach(c=>{
+    stats.总用例++;
+    const result=c&&c.result;
+    if(Object.prototype.hasOwnProperty.call(stats,result))stats[result]++;
+  }));
+  const doneLike=PASS_LIKE_CLIENT.reduce((n,k)=>n+stats[k],0);
+  stats.整体通过率=stats.总用例?Math.round(doneLike/stats.总用例*100):0;
+  return stats;
+}
+function normalizeCachedCaseResults(data){
+  const requirements=Array.isArray(data&&data.requirements)?data.requirements:[];
+  requirements.forEach(r=>(r.cases||[]).forEach(c=>{if(c)c.result=normalizeResultClient(c.result);}));
+  if(data)data.stats=buildClientStats(requirements);
+}
+function normClient(s){return String(s==null?'':s).replace(/[\s\u00a0\u3000]+/g,'').toLowerCase();}
+function normalizeResultClient(raw){
+  const s=normClient(raw);
+  // Excel 中未填写测试结果时，按“未执行”统计，不能误归类为“其他”。
+  if(!s)return '未执行';
+  for(const [std,aliases] of Object.entries(RESULT_ALIASES_CLIENT)){
+    if(normClient(std)===s||aliases.some(a=>normClient(a)===s))return std;
+  }
+  // 兼容 WPS 中带备注、换行或括号说明的显示值，例如“已通过（已回归）”。
+  if(/部分通过|partial/.test(s))return '部分通过';
+  if(/无需验证|不适用|skip/.test(s))return '无需验证';
+  if(/无法(?:执行|验证)|阻塞|挂起|blocked|block/.test(s))return '无法执行';
+  if(/未执行|未测|待执行|未跑/.test(s))return '未执行';
+  if(/失败|不通过|未通过|fail|error/.test(s))return '失败';
+  if(/已通过|通过|pass|成功/.test(s))return '已通过';
+  return String(raw).trim();
+}
 function pickClient(row,field){
   const want=ALIASES_CLIENT[field].map(normClient);
   for(const k of Object.keys(row)){if(want.includes(normClient(k)))return row[k]==null?'':String(row[k]).trim();}
@@ -774,8 +1511,15 @@ function pickClient(row,field){
 function parseExcelBuffer(ab,fileName){
   if(typeof XLSX==='undefined'){alert('Excel 组件未加载，请刷新页面后重试');return null;}
   const wb=XLSX.read(ab,{type:'array'});
-  const sheet=wb.Sheets[wb.SheetNames[0]];
-  const rows=XLSX.utils.sheet_to_json(sheet,{defval:''});
+  // 扫描全部工作表，取有效数据行最多的一个（防止首个 sheet 为空/封面页导致解析 0 条）
+  let rows=[];
+  for(const n of wb.SheetNames){
+    const sh=wb.Sheets[n];if(!sh)continue;
+    let rs=[];
+    try{rs=XLSX.utils.sheet_to_json(sh,{defval:'',raw:false});}catch(e){continue;}
+    rs=rs.filter(r=>Object.keys(r).some(k=>String(r[k]==null?'':r[k]).trim()!==''));
+    if(rs.length>rows.length)rows=rs;
+  }
   const cases=rows.map((r,i)=>({
     id:pickClient(r,'id')||('ROW'+(i+1)),
     name:pickClient(r,'name'),
@@ -784,44 +1528,214 @@ function parseExcelBuffer(ab,fileName){
     precond:pickClient(r,'precond'),
     steps:pickClient(r,'steps'),
     expected:pickClient(r,'expected'),
-    result:pickClient(r,'result')
+    result:normalizeResultClient(pickClient(r,'result')),
+    remark:pickClient(r,'remark')
   }));
   const total=cases.length;
   const passed=cases.filter(c=>c.result==='已通过').length;
   const failed=cases.filter(c=>c.result==='失败').length;
-  const passRate=total?Math.round(passed/total*100):0;
+  const partial=cases.filter(c=>c.result==='部分通过').length;
+  // 新口径：已通过 + 无法执行 + 无需验证 都算「通过」
+  const doneLike=cases.filter(c=>PASS_LIKE_CLIENT.includes(c.result)).length;
+  const passRate=total?Math.round(doneLike/total*100):0;
   let status='进行中';
-  if(total && failed>0)status='存在失败';
-  else if(total && passed===total)status='已完成';
+  if(total && (failed>0||partial>0))status='存在失败';
+  else if(total && doneLike===total)status='已完成';
   return {requirement:fileName.replace(/\.xlsx?$/i,''),file:fileName,total,passed,failed,passRate,status,cases};
 }
-function setClientCases(requirements,files){
-  const stats={
-    总需求数:requirements.length,
-    总用例:requirements.reduce((s,r)=>s+r.total,0),
-    已通过:requirements.reduce((s,r)=>s+r.passed,0),
-    失败:requirements.reduce((s,r)=>s+r.failed,0),
-    整体通过率:0
-  };
-  const t=stats.总用例;stats.整体通过率=t?Math.round(stats.已通过/t*100):0;
+/* 编辑需求时按需求单独上传：用需求名称覆盖用例分组的归属，并标记为“按需求上传”来源 */
+function parseExcelBufferReq(ab,fileName,reqId,reqName){
+  const base=parseExcelBuffer(ab,fileName);
+  if(!base)return null;
+  base.requirement=reqName;
+  base.file='req_'+reqId;
+  base.src='req';
+  base.uploadName=fileName;
+  return base;
+}
+/* 已选文件只显示数量徽章，不逐个列出文件名 */
+function setFileChips(names){
+  const box=document.getElementById('folderInput');if(!box)return;
+  if(!names||!names.length){box.innerHTML='<span class="fc-empty">尚未选择文件</span>';return;}
+  const tip=names.join('\n');
+  box.innerHTML='<span class="fc-count" title="'+esc(tip)+'">'+names.length+' 个文件</span>';
+}
+function setClientCases(requirements,files,opts){
+  const delSet=getDelSet();
+  if(delSet.size)requirements=requirements.filter(r=>!delSet.has(r.file));
+  // 「按需求上传」的用例组优先：同名文件分组被其取代，主文件重导/自动刷新不会覆盖
+  if(!(opts&&opts.replaceReq)){
+    const inc=new Map(requirements.map(r=>[r.file,r]));
+    (casesData.requirements||[]).forEach(g=>{
+      if(g.src!=='req')return;
+      if(inc.has(g.file))return;  // 本次已带上同键分组（如刚重新上传）
+      const same=Array.from(inc.values()).find(r=>r.requirement===g.requirement);
+      if(same)inc.delete(same.file);
+      inc.set(g.file,g);
+    });
+    requirements=Array.from(inc.values());
+  }
+  const stats=buildClientStats(requirements);
   const names=(files||[]).map(f=>f&&f.name?f.name:String(f));
-  casesData={requirements,stats,casesFolder:'',options:RESULT_OPTIONS_CLIENT};
-  saveCasesForVersion();renderCases();if(state.tab==='report')renderReport();populateReqSelect();
-  document.getElementById('folderInput').value=names.length?'已选择 '+names.length+' 个文件：'+names.join('、'):'';
+  try{localStorage.setItem(hsLabelKey(),JSON.stringify(names));}catch(e){}
+  casesData={requirements,stats,options:RESULT_OPTIONS_CLIENT};
+  saveCasesForVersion();renderCases();renderToday();if(state.tab==='report')renderReport();
+  setFileChips(names);
 }
 /* 记住已选文件的句柄，「刷新」时用它重新读取磁盘上的最新内容 */
 let pickedHandles=[];
+/* 句柄持久化到 IndexedDB：整页刷新（F5）后仍能重读最新内容 */
+const HS_DB='wb_file_handles',HS_STORE='handles',HS_KEY='current',HS_MODE='source',HS_LABEL='wb_case_files',HS_CASES='cases';
+/* 文件选择按版本隔离：每个迭代各自记住所选 Excel，切换版本时互不影响 */
+const hsKey=()=>state.curIter?('files_'+state.curIter):null;
+const hsLabelKey=()=>HS_LABEL+'_'+(state.curIter||'none');
+function openHandlesDB(){
+  return new Promise((res,rej)=>{
+    const rq=indexedDB.open(HS_DB,2);
+    rq.onupgradeneeded=()=>{const db=rq.result;if(!db.objectStoreNames.contains(HS_STORE))db.createObjectStore(HS_STORE);if(!db.objectStoreNames.contains(HS_CASES))db.createObjectStore(HS_CASES);};
+    rq.onsuccess=()=>res(rq.result);
+    rq.onerror=()=>rej(rq.error);
+  });
+}
+async function dbGetCases(){try{const db=await openHandlesDB();return await new Promise((res,rej)=>{const out={};const rq=db.transaction(HS_CASES,'readonly').objectStore(HS_CASES).openCursor();rq.onsuccess=e=>{const c=e.target.result;if(c){out[c.key]=c.value;c.continue();}else{res(out);}};rq.onerror=()=>rej(rq.error);});}catch(e){return{};}}
+async function dbPutCase(id,data){try{const db=await openHandlesDB();await new Promise((res,rej)=>{const tx=db.transaction(HS_CASES,'readwrite');tx.objectStore(HS_CASES).put(data,id);tx.oncomplete=()=>res();tx.onerror=()=>rej(tx.error);});db.close();}catch(e){console.warn('用例缓存写 IndexedDB 失败',e);}}
+async function dbDelCase(id){try{const db=await openHandlesDB();await new Promise((res,rej)=>{const tx=db.transaction(HS_CASES,'readwrite');tx.objectStore(HS_CASES).delete(id);tx.oncomplete=()=>res();tx.onerror=()=>rej(tx.error);});db.close();}catch(e){}}
+async function dbClearCases(){try{const db=await openHandlesDB();await new Promise((res,rej)=>{const tx=db.transaction(HS_CASES,'readwrite');tx.objectStore(HS_CASES).clear();tx.oncomplete=()=>res();tx.onerror=()=>rej(tx.error);});db.close();}catch(e){}}
+async function saveHandles(handles){
+  const key=hsKey();if(!key)return;
+  try{
+    const db=await openHandlesDB();
+    await new Promise((res,rej)=>{
+      const tx=db.transaction(HS_STORE,'readwrite');
+      const store=tx.objectStore(HS_STORE);
+      store.put(handles,key);
+      // 清除旧版文件夹句柄：当前仅支持选择 Excel 文件。
+      store.delete('dir');
+      store.put('files',HS_MODE);
+      tx.oncomplete=()=>res();tx.onerror=()=>rej(tx.error);
+    });
+    db.close();
+  }catch(e){console.warn('句柄保存失败',e);}
+}
+async function restoreHandles(){
+  try{
+    const key=hsKey();
+    const db=await openHandlesDB();
+    const saved=await new Promise((res,rej)=>{
+      const tx=db.transaction(HS_STORE,'readonly'),store=tx.objectStore(HS_STORE);
+      const handlesRq=key?store.get(key):null,legacyRq=store.get(HS_KEY),modeRq=store.get(HS_MODE);
+      tx.oncomplete=()=>res({handles:handlesRq?handlesRq.result:null,legacy:legacyRq.result,mode:modeRq.result});tx.onerror=()=>rej(tx.error);
+    });
+    db.close();
+    if(saved.mode==='dir')await clearSavedSelection(); // 清理旧版遗留的文件夹来源
+    else if(saved.handles&&saved.handles.length){pickedHandles=saved.handles;removeSourceLegacy();}
+    else if(saved.legacy&&saved.legacy.length){pickedHandles=saved.legacy;await saveHandles(pickedHandles);await removeSourceLegacy();} // 旧全局数据一次性迁移后立即删除
+  }catch(e){console.warn('句柄恢复失败',e);}
+}
+/* 切换版本时按版本恢复已选文件（新迭代无记录则显示未选择） */
+async function loadVersionFiles(){
+  pickedHandles=[];let names=[];
+  if(state.curIter){
+    try{
+      const db=await openHandlesDB();
+      const hs=await new Promise((res,rej)=>{
+        const tx=db.transaction(HS_STORE,'readonly'),st=tx.objectStore(HS_STORE);
+        const rq=st.get('files_'+state.curIter);
+        tx.oncomplete=()=>res(rq.result||[]);tx.onerror=()=>rej(tx.error);
+      });
+      db.close();
+      pickedHandles=hs||[];
+    }catch(e){}
+    try{names=JSON.parse(localStorage.getItem(hsLabelKey())||'[]');}catch(e){}
+  }
+  setFileChips(names);
+}
+function restoreFileLabel(){
+  try{
+    let names=JSON.parse(localStorage.getItem(hsLabelKey())||'null');
+    if(!names){ // 旧版全局记录迁移到当前版本
+      names=JSON.parse(localStorage.getItem(HS_LABEL)||'[]');
+      if(names.length){try{localStorage.setItem(hsLabelKey(),JSON.stringify(names));}catch(e){}}
+    }
+    if(names.length)setFileChips(names);
+  }catch(e){}
+}
+/* 从 IndexedDB 恢复的句柄，读取前需确认授权（拒绝时退回重新选择） */
+async function ensureHandlePermission(){
+  for(const h of pickedHandles){
+    let perm='granted';
+    try{
+      if(h.queryPermission)perm=await h.queryPermission({mode:'read'});
+      if(perm!=='granted'&&h.requestPermission)perm=await h.requestPermission({mode:'read'});
+    }catch(e){perm='denied';}
+    if(perm!=='granted')return false;
+  }
+  return true;
+}
 async function parseFiles(files){
   const requirements=[];
   for(const file of files){
     const req=parseExcelBuffer(await file.arrayBuffer(),file.name);
-    if(req)requirements.push(req);
+    if(req&&req.cases.length)requirements.push(req);  // 跳过无数据的文件，避免出现 0 用例的空卡片
   }
   return requirements;
 }
+/* 追加模式：新选择的文件/句柄与已有的合并；同名文件视为重新上传，必须覆盖旧句柄。 */
 async function applyFiles(files,handles){
-  if(handles)pickedHandles=handles;
-  setClientCases(await parseFiles(files),files);
+  // 用户重新选择的文件，解除此前的删除标记，允许其再次展示
+  restoreDeletedFiles(files);
+  if(handles){
+    const merged=new Map(pickedHandles.map(h=>[h.name,h]));
+    handles.forEach(h=>merged.set(h.name,h));
+    pickedHandles=Array.from(merged.values());
+    // 即使文件名相同，也要保存最新选择的句柄；否则会一直读取旧文件。
+    await saveHandles(pickedHandles);
+    // 用户刚重新选择的文件优先使用本次已读取的快照，不能再次退回旧句柄内容。
+    const selectedFiles=new Map((files||[]).map(file=>[file.name,file]));
+    const allFiles=[];const lost=[];
+    for(const h of pickedHandles){
+      try{allFiles.push(selectedFiles.get(h.name)||await h.getFile());}
+      catch(err){lost.push(h.name);}  // 旧句柄指向的文件已失效，自动剔除，避免刷新时报错
+    }
+    if(lost.length){
+      pickedHandles=pickedHandles.filter(h=>!lost.includes(h.name));
+      await saveHandles(pickedHandles);
+      console.warn('已忽略不存在的文件句柄：',lost);
+    }
+    setClientCases(await parseFiles(allFiles),allFiles);
+  }else{
+    /* fallback 模式：从 localStorage 恢复上次文件名列表，用于提示；实际以本次选择的 files 为准 */
+    let prevNames=[];
+    try{prevNames=JSON.parse(localStorage.getItem(hsLabelKey())||'[]');}catch(e){}
+    const prevSet=new Set(prevNames);
+    const added=files.filter(f=>!prevSet.has(f.name));
+    if(!added.length&&prevNames.length){/* 全是已选过的文件，仍允许重新解析（可能文件内容更新了）*/}
+    // input[type=file] 的 File 不能跨刷新恢复；清理旧句柄，但保留已解析的用例缓存。
+    pickedHandles=[];await clearSavedSelection();
+    setClientCases(await parseFiles(files),files);
+  }
+}
+/* 旧版全局用例文件记录一次性清理（迁移后调用，防止新版本反复继承） */
+async function removeSourceLegacy(){
+  try{localStorage.removeItem(HS_LABEL);}catch(e){}
+  try{
+    const db=await openHandlesDB();
+    await new Promise((res,rej)=>{const tx=db.transaction(HS_STORE,'readwrite'),st=tx.objectStore(HS_STORE);st.delete(HS_KEY);st.delete('dir');st.put('none',HS_MODE);tx.oncomplete=()=>res();tx.onerror=()=>rej(tx.error);});
+    db.close();
+  }catch(e){}
+}
+async function clearSavedSelection(){
+  try{
+    const db=await openHandlesDB();
+    await new Promise((res,rej)=>{const tx=db.transaction(HS_STORE,'readwrite'),store=tx.objectStore(HS_STORE);if(hsKey())store.delete(hsKey());store.delete(HS_KEY);store.delete('dir');store.put('none',HS_MODE);tx.oncomplete=()=>res();tx.onerror=()=>rej(tx.error);});
+    db.close();
+  }catch(e){console.warn('已选来源清理失败',e);}
+}
+async function hasHandlesPermission(){
+  for(const h of pickedHandles){
+    try{if(h.queryPermission){const p=await h.queryPermission({mode:'read'});if(p!=='granted')return false;}}catch(e){return false;}
+  }
+  return true;
 }
 async function pickFolder(){
   if(!state.curIter){alert('请先在顶部选择一个版本');return;}
@@ -830,24 +1744,69 @@ async function pickFolder(){
       const all=await window.showOpenFilePicker({multiple:true});
       const handles=all.filter(h=>/\.xlsx?$/i.test(h.name)&&!h.name.startsWith('~$'));
       if(!handles.length){alert('请选择 .xlsx / .xls 文件');return;}
-      const files=[];for(const h of handles)files.push(await h.getFile());
+      const files=[];const lost=[];
+      for(const h of handles){
+        try{files.push(await h.getFile());}
+        catch(err){lost.push(h.name);}
+      }
+      if(lost.length){alert('以下文件读取失败（可能已被移动或删除），已跳过：\n'+lost.join('\n'));}
+      if(!files.length){alert('所选文件均无法读取。');return;}
       await applyFiles(files,handles);
     }catch(e){if(e.name!=='AbortError'){console.error(e);alert('选择文件失败：'+e.message);}}
     return;
   }
   document.getElementById('folderFallback').click();
 }
-/* 刷新：重新读取已选文件的最新内容（Excel 修改后需先保存） */
+/* 刷新：重新读取已选 Excel 文件的最新内容（Excel 修改后需先保存） */
 async function refreshCases(){
   if(!state.curIter){alert('请先在顶部选择一个版本');return;}
-  if(!pickedHandles.length){alert('请重新点击「选择文件」以读取最新内容。');return;}
+  if(!pickedHandles.length){alert('请先点击「选择文件」。');return;}
+  if(!await ensureHandlePermission()){alert('未获得文件读取授权，请重新点击「选择文件」。');pickedHandles=[];return;}
   try{
-    const files=[];for(const h of pickedHandles)files.push(await h.getFile());
+    const files=[];const lost=[];
+    for(const h of pickedHandles){
+      try{files.push(await h.getFile());}
+      catch(err){lost.push(h.name);}  // 文件被移动/重命名/删除时跳过，不中断整体刷新
+    }
+    if(lost.length){
+      pickedHandles=pickedHandles.filter(h=>!lost.includes(h.name));
+      await saveHandles(pickedHandles);
+      alert('以下文件已不存在（可能被移动、重命名或删除），已自动从列表移除：\n'+lost.join('\n'));
+      if(!files.length){setClientCases([],[]);return;}
+    }
     await applyFiles(files,pickedHandles);
   }catch(e){console.error(e);alert('重新读取文件失败：'+e.message);}
 }
+/* 自动刷新：每 5 秒重读已选文件的最新内容（Excel 保存后自动同步） */
+let autoTimer=null;
+const AUTO_MS=5000;
+function updateAutoBtn(){
+  const b=document.getElementById('autoBtn');if(!b)return;
+  b.classList.toggle('primary',!!autoTimer);
+  b.textContent=autoTimer?'自动刷新中':'自动刷新';
+}
+function stopAutoRefresh(){if(autoTimer){clearInterval(autoTimer);autoTimer=null;}updateAutoBtn();}
+async function autoRefreshOnce(silent){
+  if(!state.curIter)return;
+  if(!pickedHandles.length)return;
+  const ok=silent?await hasHandlesPermission():await ensureHandlePermission();
+  if(!ok){if(!silent){stopAutoRefresh();alert('文件读取授权已失效，自动刷新已停止。');}return;}
+  try{
+    const files=[];for(const h of pickedHandles)files.push(await h.getFile());
+    const reqs=await parseFiles(files);
+    if(!reqs.length){console.warn('刷新读取为空，保留上次缓存');return;}
+    await applyFiles(files,pickedHandles);
+  }catch(e){console.warn('自动刷新失败，保留上次缓存',e);}
+}
+function toggleAutoRefresh(){
+  if(autoTimer){stopAutoRefresh();return;}
+  if(!pickedHandles.length){alert('请先点击「选择文件」，再开启自动刷新。');return;}
+  autoTimer=setInterval(()=>{if(!document.hidden)autoRefreshOnce();},AUTO_MS);
+  updateAutoBtn();autoRefreshOnce();
+}
 
-function exportJSON(){download('测试小台备份-'+todayStr()+'.json',JSON.stringify({bugs:state.bugs,iterations:state.iterations},null,2),'application/json')}
+function tsStr(){const d=new Date();const p=n=>String(n).padStart(2,'0');return d.getFullYear()+p(d.getMonth()+1)+p(d.getDate())+'-'+p(d.getHours())+p(d.getMinutes())+p(d.getSeconds());}
+function exportJSON(){download('测试小台备份-'+tsStr()+'.json',JSON.stringify({iterations:state.iterations},null,2),'application/json')}
 function buildReportMD(){
   const t=todayStr(),m=reportMetrics();
   const it=m.it;
@@ -858,25 +1817,86 @@ function buildReportMD(){
   md+='| 整体通过率 | '+m.passRate+'% |\n';
   md+='| Bug 遗留数 | '+m.remain+' |\n\n';
   md+='## 一、版本概览\n';
-  md+='- 需求数：'+m.reqCount+'\n- 用例总数：'+m.total+'\n- 已执行：'+m.executed+'\n- 未执行：'+m.notExec+'\n- 通过：'+m.passed+'\n- 失败：'+m.failed+'\n\n';
-  md+='## 二、需求明细\n\n| 需求名称 | 用例总数 | 通过数 | 失败 | 未执行行 | 通过率 |\n| --- | --- | --- | --- | --- | --- |\n';
-  casesData.requirements.forEach(r=>{const n=r.total-r.passed-r.failed;md+='| '+r.requirement+' | '+r.total+' | '+r.passed+' | '+r.failed+' | '+n+' | '+(r.total?Math.round(r.passed/r.total*100):0)+'% |\n';});
-  md+='\n## 三、缺陷（'+m.bs.length+'，未关闭 '+m.remain+'）\n';
+  md+='- 需求数：'+m.reqCount+'\n- 用例总数：'+m.total+'\n- 已执行：'+m.executed+'\n- 未执行：'+m.notExec+'\n- 通过：'+m.passedLike+'\n- 失败：'+m.failed+'\n\n';
+  if(it&&it.note)md+='> 备注（版本意外情况）：'+it.note+'\n\n';
+  md+='## 二、需求明细\n\n| 产品经理 | 需求名称 | 研发 | 用例总数 | 通过 | 失败 | 未执行 | 通过率 |\n| --- | --- | --- | --- | --- | --- | --- | --- |\n';
+  casesData.requirements.forEach(r=>{const n=reqNotExec(r);md+='| '+reqPM(r.requirement)+' | '+r.requirement+' | '+reqDev(r.requirement)+' | '+r.total+' | '+clientPassedLike(r)+' | '+r.failed+' | '+n+' | '+clientPassRate(r)+'% |\n';});
+  md+='\n## 三、缺陷（'+m.bs.length+'，未解决 '+m.remain+'）\n';
   m.bs.forEach(b=>md+='- ['+b.status+'] '+b.title+' · '+b.sev+' · 关联:'+(b.relatedReq||'-')+' · 研发:'+(b.owner||'-')+'\n');
   return md;
 }
 function buildReportHTML(){
   const t=todayStr(),m=reportMetrics();
-  const it=m.it;
-  let h='<!DOCTYPE html><html lang="zh-CN"><head><meta charset="UTF-8"><title>测试报告 '+t+'</title><style>body{font-family:sans-serif;max-width:900px;margin:40px auto;padding:0 20px;color:#333;line-height:1.7}h1{color:#ff7eb3}h2{color:#b79ced;margin-top:28px}table{border-collapse:collapse;width:100%;font-size:13px;margin-top:10px}th,td{border:1px solid #eee;padding:8px;text-align:left}th{background:#fff0f6;color:#ff7eb3}.kpi{display:inline-block;background:#fff0f6;border-radius:10px;padding:10px 18px;margin:0 10px 10px 0}.kpi .n{font-size:22px;font-weight:800;color:#ff7eb3}</style></head><body>';
-  h+='<h1>测试报告 '+t+'（版本：'+(it?esc(it.name):'-')+'）</h1>';
-  h+='<div class="kpi"><div class="n">'+m.reqCov+'%</div><div>需求覆盖率</div></div>';
-  h+='<div class="kpi"><div class="n">'+m.execRate+'%</div><div>用例执行率</div></div>';
-  h+='<div class="kpi"><div class="n">'+m.passRate+'%</div><div>整体通过率</div></div>';
-  h+='<div class="kpi"><div class="n">'+m.remain+'</div><div>Bug 遗留数</div></div>';
-  h+='<h2>一、版本概览</h2><ul><li>需求数：'+m.reqCount+'</li><li>用例总数：'+m.total+'</li><li>已执行：'+m.executed+'</li><li>未执行：'+m.notExec+'</li><li>通过：'+m.passed+'</li><li>失败：'+m.failed+'</li></ul>';
-  h+='<h2>二、需求明细</h2><table><thead><tr><th>需求名称</th><th>用例总数</th><th>通过数</th><th>失败</th><th>未执行行</th><th>通过率</th></tr></thead><tbody>'+casesData.requirements.map(r=>{const n=r.total-r.passed-r.failed;return '<tr><td>'+esc(r.requirement)+'</td><td>'+r.total+'</td><td>'+r.passed+'</td><td>'+r.failed+'</td><td>'+n+'</td><td>'+(r.total?Math.round(r.passed/r.total*100):0)+'%</td></tr>';}).join('')+'</tbody></table>';
-  h+='<h2>三、缺陷（'+m.bs.length+'，未关闭 '+m.remain+'）</h2><ul>'+m.bs.map(b=>'<li>['+b.status+'] '+esc(b.title)+' · '+b.sev+' · 关联:'+esc(b.relatedReq||'-')+' · 研发:'+esc(b.owner||'-')+'</li>').join('')+'</ul>';
+  const it=m.it,ver=it?it.name:'-';
+  const SEV_COLOR={'致命':'#b0392f','严重':'#b5701f','一般':'#5a5a5a','轻微':'#8a8a8a'};
+  const ST_COLOR={'已解决':'#4e7d5e','未验证':'#b5701f'};
+  const css=':root{--brand:#4a6572;--brand2:#66839a;--ink:#2b3138;--muted:#7a848d;--line:#d9dee3;--soft:#f6f8f9}'
+    +'*{box-sizing:border-box}'
+    +'body{font-family:"Microsoft YaHei","PingFang SC","Hiragino Sans GB",Arial,sans-serif;max-width:1180px;margin:0 auto;padding:36px 20px 72px;color:var(--ink);line-height:1.65;background:#fff}'
+    +'.report-head{display:flex;align-items:baseline;justify-content:space-between;flex-wrap:wrap;gap:6px;border-bottom:2px solid var(--brand);padding-bottom:14px}'
+    +'.report-head h1{margin:0;font-size:23px;color:var(--brand);letter-spacing:1px;font-weight:600}'
+    +'.report-head .meta{color:var(--muted);font-size:13px}'
+    +'.kpi-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin:24px 0 8px}'
+    +'.kpi{background:var(--soft);border:1px solid var(--line);border-left:3px solid var(--brand);border-radius:3px;padding:18px 20px}'
+    +'.kpi .n{font-size:30px;font-weight:600;color:var(--brand);line-height:1.1}'
+    +'.kpi .t{font-size:13px;color:var(--muted);margin-top:5px}'
+    +'h2{font-size:16px;color:var(--brand);margin:32px 0 12px;padding-left:10px;border-left:3px solid var(--brand);font-weight:600}'
+    +'.ov-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}'
+    +'.ov{display:flex;justify-content:space-between;background:var(--soft);border:1px solid var(--line);border-radius:3px;padding:11px 16px}'
+    +'.ov .k{color:var(--muted);font-size:13px}.ov .v{font-weight:600;color:var(--brand)}'
+    +'.iter-note{margin-top:12px;background:var(--soft);border:1px solid var(--line);border-left:3px solid var(--brand2);border-radius:3px;padding:10px 14px;font-size:13px;white-space:pre-wrap}'
+    +'.iter-note b{display:block;color:var(--brand);margin-bottom:4px;font-size:12.5px}'
+    +'table{border-collapse:collapse;width:100%;font-size:13.5px}'
+    +'thead th{background:var(--brand);color:#fff;text-align:left;padding:11px 13px;font-weight:600;white-space:nowrap}'
+    +'tbody td{padding:11px 13px;border:1px solid var(--line);vertical-align:middle}'
+    +'tbody tr:nth-child(even){background:#f8fafb}'
+    +'.center{text-align:center}'
+    +'.dev{white-space:nowrap}'
+    +'.rate{display:flex;align-items:center;gap:8px;min-width:130px}'
+    +'.rate .bar{flex:1;height:7px;background:#e6eaee;border-radius:2px;overflow:hidden}'
+    +'.rate .bar i{display:block;height:100%;background:var(--brand2);border-radius:2px}'
+    +'.rate b{min-width:40px;text-align:right;font-weight:600;color:var(--brand)}'
+    +'.st{display:inline-block;font-size:12px;padding:1px 8px;border-radius:2px;border:1px solid currentColor;white-space:nowrap}'
+    +'.note{font-size:12px;color:var(--muted);margin-top:10px}'
+    +'@media print{body{padding:0;font-size:12px}.kpi,tr{break-inside:avoid}}';
+  let h='<!DOCTYPE html><html lang="zh-CN"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>测试报告 '+t+'</title><style>'+css+'</style></head><body>';
+  h+='<div class="report-head"><h1>测试报告</h1><div class="meta">版本：'+esc(ver)+' ｜ 日期：'+t+'</div></div>';
+  h+='<div class="kpi-grid">'
+    +'<div class="kpi"><div class="n">'+m.reqCov+'%</div><div class="t">需求覆盖率</div></div>'
+    +'<div class="kpi"><div class="n">'+m.execRate+'%</div><div class="t">用例执行率</div></div>'
+    +'<div class="kpi"><div class="n">'+m.passRate+'%</div><div class="t">整体通过率</div></div>'
+    +'<div class="kpi"><div class="n">'+m.remain+'</div><div class="t">Bug 遗留数</div></div>'
+    +'</div>';
+  h+='<h2>一、版本概览</h2><div class="ov-grid">'
+    +'<div class="ov"><span class="k">需求数</span><span class="v">'+m.reqCount+'</span></div>'
+    +'<div class="ov"><span class="k">用例总数</span><span class="v">'+m.total+'</span></div>'
+    +'<div class="ov"><span class="k">已执行</span><span class="v">'+m.executed+'</span></div>'
+    +'<div class="ov"><span class="k">未执行</span><span class="v">'+m.notExec+'</span></div>'
+    +'<div class="ov"><span class="k">通过</span><span class="v">'+m.passedLike+'</span></div>'
+    +'<div class="ov"><span class="k">失败</span><span class="v">'+m.failed+'</span></div>'
+    +'</div>'
+    +(it&&it.note?'<div class="iter-note"><b>备注（版本意外情况）</b>'+esc(it.note)+'</div>':'');
+  const rows=casesData.requirements.map(r=>{
+    const n=reqNotExec(r),pass=clientPassedLike(r),rate=clientPassRate(r);
+    const dev=esc(reqDev(r.requirement)).replace(' / ','<br>');   // 前端 / 后端 换行
+    return '<tr><td>'+esc(reqPM(r.requirement))+'</td><td>'+esc(r.requirement)+'</td><td class="dev">'+dev+'</td>'
+      +'<td class="center">'+r.total+'</td><td class="center">'+pass+'</td><td class="center">'+r.failed+'</td><td class="center">'+n+'</td>'
+      +'<td><div class="rate"><span class="bar"><i style="width:'+rate+'%"></i></span><b>'+rate+'%</b></div></td></tr>';
+  }).join('');
+  h+='<h2>二、需求明细</h2><table><thead><tr><th style="width:96px">产品经理</th><th>需求名称</th><th style="width:150px">研发</th><th class="center" style="width:86px">用例总数</th><th class="center" style="width:76px">通过</th><th class="center" style="width:76px">失败</th><th class="center" style="width:86px">未执行</th><th style="width:180px">通过率</th></tr></thead><tbody>'+rows+'</tbody></table>';
+  h+='<div class="note">说明：通过率 =（已通过 + 无法执行 + 无需验证）÷ 用例总数</div>';
+  h+='<h2>三、缺陷（'+m.bs.length+'，未解决 '+m.remain+'）</h2>';
+  if(m.bs.length){
+    const bugRows=m.bs.map(b=>'<tr>'
+      +'<td class="center"><span class="st" style="color:'+(ST_COLOR[b.status]||'#555')+'">'+esc(b.status)+'</span></td>'
+      +'<td>'+esc(b.title)+'</td>'
+      +'<td class="center" style="color:'+(SEV_COLOR[b.sev]||'#555')+';font-weight:600">'+esc(b.sev)+'</td>'
+      +'<td>'+esc(b.relatedReq||'-')+'</td>'
+      +'</tr>').join('');
+    h+='<table><thead><tr><th class="center" style="width:96px">状态</th><th>缺陷描述</th><th class="center" style="width:110px">严重级别</th><th style="width:300px">关联需求</th></tr></thead><tbody>'+bugRows+'</tbody></table>';
+  }else{
+    h+='<div class="note">本版本无缺陷记录。</div>';
+  }
   h+='</body></html>';
   return h;
 }
@@ -901,13 +1921,15 @@ function exportVersionReport(){
     ['用例总数',m.total],
     ['已执行',m.executed],
     ['未执行',m.notExec],
-    ['通过',m.passed],
-    ['失败',m.failed]
+    ['通过',m.passedLike],
+    ['失败',m.failed],
+    [],
+    ['备注（版本意外情况）',it.note||'']
   ];
   XLSX.utils.book_append_sheet(wb,XLSX.utils.aoa_to_sheet(overview),'概览');
   // 需求明细 sheet
-  const reqHead=['需求名称','用例总数','通过数','失败','未执行行','通过率'];
-  const reqRows=casesData.requirements.map(r=>{const n=r.total-r.passed-r.failed;return [r.requirement,r.total,r.passed,r.failed,n,(r.total?Math.round(r.passed/r.total*100):0)+'%'];});
+  const reqHead=['产品经理','需求名称','研发','用例总数','通过','失败','未执行','通过率'];
+  const reqRows=casesData.requirements.map(r=>{const n=reqNotExec(r);return [reqPM(r.requirement),r.requirement,reqDev(r.requirement),r.total,clientPassedLike(r),r.failed,n,clientPassRate(r)+'%'];});
   XLSX.utils.book_append_sheet(wb,XLSX.utils.aoa_to_sheet([reqHead].concat(reqRows)),'需求明细');
   // Bug sheet
   const bugHead=['关联需求','bug简述','严重级别','研发','测试验收'];
@@ -928,6 +1950,18 @@ document.getElementById('caseModalClose').onclick=()=>document.getElementById('c
 document.getElementById('caseMask').addEventListener('click',e=>{if(e.target.id==='caseMask')document.getElementById('caseMask').classList.remove('show')});
 document.getElementById('bugModalClose').onclick=()=>document.getElementById('bugMask').classList.remove('show');
 document.getElementById('bugMask').addEventListener('click',e=>{if(e.target.id==='bugMask')document.getElementById('bugMask').classList.remove('show')});
+document.getElementById('iterCancel').onclick=closeIterEdit;
+document.getElementById('iterSave').onclick=saveIterEdit;
+document.getElementById('iterMask').addEventListener('click',e=>{if(e.target.id==='iterMask')closeIterEdit()});
+document.getElementById('reqCancel').onclick=closeReqEdit;
+document.getElementById('reqSave').onclick=saveReqEdit;
+document.getElementById('reqMask').addEventListener('click',e=>{if(e.target.id==='reqMask')closeReqEdit()});
+document.getElementById('reqCaseRemove').onclick=removeReqCase;
+document.getElementById('reqCaseFile').addEventListener('change',async e=>{
+  const f=e.target.files[0];e.target.value='';if(!f)return;
+  if(!/\.xlsx?$/i.test(f.name)||f.name.startsWith('~$')){alert('请选择 .xlsx / .xls 文件');return;}
+  await uploadReqCase(f);
+});
 
 /* 统一事件委托 */
 document.addEventListener('click',e=>{
@@ -935,19 +1969,29 @@ document.addEventListener('click',e=>{
   const a=el.dataset.action,id=el.dataset.id;
   switch(a){
     case 'tab':state.tab=el.dataset.tab;refreshAll();break;
-    case 'add-bug':addBug();break;
     case 'export-bugs':exportBugs();break;
     case 'open-bug':openBug(id);break;
     case 'add-iter':addIter();break;
-    case 'del-iter':confirmBox('删除当前版本','将删除该版本及其下所有需求与缺陷，无法恢复！确定？',delIter);break;
-    case 'switch-iter':state.curIter=el.dataset.id;syncCasesForVersion();refreshAll();break;
+    case 'del-iter':confirmBox('删除当前版本','将删除该版本及其下所有需求，无法恢复！确定？',delIter);break;
+    case 'switch-iter':
+      if(id===state.curIter)openIterEdit(id);          // 点击已选中的版本 → 编辑名称与时间
+      else{state.curIter=id;save();syncCasesForVersion();refreshAll();}
+      break;
+    case 'edit-iter':openIterEdit(id);break;
+    case 'edit-req':openReqEdit(el.dataset.iter,id);break;
     case 'add-req':addReq();break;
     case 'del-req':delReq(el.dataset.iter,id);break;
+    case 'del-case-req':confirmBox('删除用例','将删除该需求下的全部用例（重新选择文件可恢复），确定？',()=>delCaseReq(el.dataset.file));break;
     case 'req-handle':reqHandle(el.dataset.iter,id);break;
-    case 'del-bug':del(state.bugs,id);break;
-    case 'advance-bug':advanceBug(id);break;
+    case 'pick-bug-file':pickBugFile();break;
+    case 'remove-bug-file':confirmBox('移除缺陷文件','将清除已选择的缺陷 Excel 及其展示数据（不会改动文件本身），确定？',()=>clearBugHandle());break;
+    case 'refresh-bugs':refreshBugs();break;
+    case 'toggle-bug-auto':toggleBugAuto();break;
+    case 'toggle-bug-group':toggleBugGroup(el);break;
     case 'open-req':openReq(el.dataset.file);break;
+    case 'sort-report':{const f=el.dataset.field;if(reportSort.field===f)reportSort.dir*=-1;else{reportSort.field=f;reportSort.dir=1;}renderReport();break;}
     case 'refresh-cases':refreshCases();break;
+    case 'toggle-auto':toggleAutoRefresh();break;
     case 'pick-folder':pickFolder();break;
     case 'export-json':exportJSON();break;
     case 'gen-md':genMD();break;
@@ -955,13 +1999,14 @@ document.addEventListener('click',e=>{
     case 'gen-print':genPrint();break;
     case 'export-report':exportVersionReport();break;
     case 'toggle-fold':document.getElementById(el.dataset.target).classList.toggle('collapsed');break;
-    case 'clear-all':confirmBox('清空全部数据','将删除所有 Bug 与版本需求，且无法恢复！确定？',()=>{state.bugs=[];state.iterations=[];state.curIter=null;casesCache={};for(let i=localStorage.length-1;i>=0;i--){const key=localStorage.key(i);if(key&&key.startsWith(K.cases+'_'))localStorage.removeItem(key);}save();refreshAll()});break;
+    case 'show-result-cases':showResultCases(el.dataset.result);break;
+    case 'clear-all':confirmBox('清空全部数据','将删除所有版本需求与本地用例缓存，且无法恢复！（缺陷数据以 Excel 为准，不受影响）确定？',()=>{state.iterations=[];state.curIter=null;casesCache={};for(let i=localStorage.length-1;i>=0;i--){const key=localStorage.key(i);if(key&&key.startsWith(K.cases+'_'))localStorage.removeItem(key);}dbClearCases();clearDelFiles();save();refreshAll()});break;
     case 'import-json':document.getElementById('importFile').click();break;
   }
 });
 document.getElementById('importFile').addEventListener('change',e=>{
   const f=e.target.files[0];if(!f)return;const r=new FileReader();
-  r.onload=()=>{try{const d=JSON.parse(r.result);state.bugs=d.bugs||[];state.iterations=d.iterations||[];if(state.iterations.length)state.curIter=state.iterations[0].id;save();refreshAll();}catch(err){alert('文件解析失败');}};
+  r.onload=()=>{try{const d=JSON.parse(r.result);state.iterations=d.iterations||[];if(state.iterations.length)state.curIter=state.iterations[0].id;save();refreshAll();}catch(err){alert('文件解析失败');}};
   r.readAsText(f);e.target.value='';
 });
 document.getElementById('folderFallback').addEventListener('change',async e=>{
@@ -970,18 +2015,60 @@ document.getElementById('folderFallback').addEventListener('change',async e=>{
   if(!files.length){alert('请选择 .xlsx / .xls 文件');e.target.value='';return;}
   await applyFiles(files,null);e.target.value='';
 });
+document.getElementById('bugFileFallback').addEventListener('change',async e=>{
+  const f=e.target.files[0];e.target.value='';
+  if(!f)return;
+  if(!/\.xlsx?$/i.test(f.name)||f.name.startsWith('~$')){alert('请选择 .xlsx / .xls 文件');return;}
+  await applyBugFile(f,null);
+});
 document.addEventListener('change',e=>{
-  const el=e.target.closest('[data-action="upd-req"]');if(!el)return;
-  updReq(el.dataset.iter,el.dataset.id,el.dataset.field,el.value);
+  const rq=e.target.closest('[data-action="upd-req"]');
+  if(rq){updReq(rq.dataset.iter,rq.dataset.id,rq.dataset.field,rq.value);return;}
 });
 
+/* 日期控件：点击输入框任意位置即打开日历（无需只点右侧图标）；并同步自定义占位文案 */
+function syncDatePhFields(ids){
+  ids.forEach(id=>{
+    const el=document.getElementById(id);if(!el)return;
+    const has=!!el.value;
+    el.classList.toggle('no-val',!has);
+    const ph=el.parentElement?el.parentElement.querySelector('.date-ph'):null;
+    if(ph)ph.style.display=has?'none':'';
+  });
+}
+function syncDatePh(){syncDatePhFields(['i_start','i_end']);}
+function enableDatePicker(ids){
+  ids.forEach(id=>{
+    const el=document.getElementById(id);
+    if(!el)return;
+    const sync=()=>syncDatePhFields([id]);
+    el.addEventListener('change',sync);
+    el.addEventListener('input',sync);
+    if(typeof el.showPicker!=='function')return;
+    const open=()=>{try{el.showPicker();}catch(e){}};
+    el.addEventListener('click',open);
+  });
+}
+
 /* ============ 初始化 ============ */
-window.addEventListener('DOMContentLoaded',()=>{
-  load();
-  if(!state.bugs.length&&!state.iterations.length) seed();
+window.addEventListener('DOMContentLoaded',async()=>{
+  await load();
+  if(!state.iterations.length) seed();
+  syncCasesForVersion();          // 直接恢复本地缓存的用例（不再请求服务端目录，避免被空数据覆盖）
+  enableDatePicker(['i_start','i_end','e_start','e_end']);
+  syncDatePh();
   refreshAll();
-  loadCases();
-  openStream();
+  restoreFileLabel();
+  await restoreHandles();         // 恢复文件句柄，F5 后仍可点「刷新」读最新内容
+  // 刷新页面（F5）后：授权仍有效就直接读取最新；否则等用户首次点击时补读一次
+  if(pickedHandles.length){
+    await autoRefreshOnce(true);
+    let waked=false;
+    const wake=()=>{if(waked)return;waked=true;autoRefreshOnce(false);};
+    document.addEventListener('pointerdown',wake,{capture:true});
+    document.addEventListener('keydown',wake,{capture:true});
+  }
+  // 缺陷已在 syncCasesForVersion() → syncBugsForVersion() 中按当前版本恢复
 });
 </script>
 <script src="/xlsx.full.min.js"></script>
